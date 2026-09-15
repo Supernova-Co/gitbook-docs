@@ -1,4 +1,4 @@
-# Mission: Bring Rate Predictability Onchain
+# Mission: Universal Hedging Layer for Internet Capital Markets
 
 Every economy runs on a predictable cost of capital.
 
@@ -18,17 +18,15 @@ Trading allows capital to move. **Hedging allows capital to commit.**
 
 Rates Exchange provides both sides of this market.
 
-### For Traders
-
-Rates Exchange is a high-performance, CLOB-based exchange for trading economically important rates that lack liquid spot markets, starting with interest rates and FX.
-
-Traders provide liquidity, express views on rates efficiently, and enable transparent price discovery.
-
 ### For Hedgers
 
 Rates Exchange is a hedging layer built on top of the protocols institutions already use. Borrowers and applications can access predictable rates through one API call or one click while retaining the security and liquidity of protocols such as Aave and Morpho.
 
-We are starting with interest rates, followed by compute, FX, and fixed-rate equity perps.
+### For Traders
+
+Rates Exchange is a high-performance, CLOB-based exchange for trading economically important rates that lack liquid spot markets. We are starting with interest rates, followed by compute, FX, and fixed-rate equity perps.
+
+Traders provide liquidity, express views on rates efficiently, and enable transparent price discovery.
 
 Traditional rates markets trade approximately **$18 trillion per day**. We believe onchain rates markets can become equally significant over the next decade, powered by global access, unified liquidity, 24/7 availability, and transparent settlement.
 

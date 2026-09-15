@@ -2,7 +2,7 @@
 
 ## About Rates Exchange
 
-* [Mission: Bring Rate Predictability Onchain](README.md)
+* [Mission: Universal Hedging Layer for Internet Capital Markets](README.md)
 * [Overview](overview.md)
 * [Core Contributors](core-contributors.md)
 

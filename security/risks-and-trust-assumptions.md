@@ -32,3 +32,7 @@ Smart contract failures and failures in connected services can affect funds or t
 ## Audits
 
 Audits provide evidence about a reviewed scope and version. They do not guarantee that every deployed component or future change is free of defects. See [Audits](audits.md).
+
+## Security contact
+
+To report a suspected vulnerability or security concern, email [security@rates.exchange](mailto:security@rates.exchange).
