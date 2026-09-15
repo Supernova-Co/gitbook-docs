@@ -24,9 +24,9 @@ Check the transfer network and destination in [Rates Exchange](https://beta.rate
 
 {% stepper %}
 {% step %}
-### Open Rates Exchange
+### Connect your wallet
 
-Go to [Rates Exchange](https://beta.rates.exchange) and access the account you intend to use for your rates positions.
+Open [Rates Exchange](https://beta.rates.exchange) and select **Connect Wallet**. Connect the wallet you intend to use to fund your account.
 {% endstep %}
 
 {% step %}
