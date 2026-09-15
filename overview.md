@@ -21,7 +21,7 @@ layout:
 
 # Overview
 
-Rates Exchange is an exchange for trading and hedging rates. Its private beta is live at [beta.rates.exchange](https://beta.rates.exchange), with monthly-expiring markets for Aave USDC and USDT borrow rates on Ethereum mainnet.
+Rates Exchange is an exchange for trading and hedging rates. [Rates Exchange](https://beta.rates.exchange) offers monthly-expiring markets for Aave USDC and USDT borrow rates on Ethereum mainnet.
 
 ## Choose your starting point
 
@@ -32,13 +32,15 @@ Rates Exchange is an exchange for trading and hedging rates. Its private beta is
 | Express a view on rates | [Trade Rates](user-guides/trade-rates.md) |
 | Understand vault participation | [Provide Vault Liquidity](user-guides/provide-vault-liquidity.md) |
 
+For borrowers and lenders, the hedge remains separate from the underlying loan or deposit. Differences in size, benchmark, term, and costs can affect the result.
+
 ## What changes hands?
 
 A rates position exchanges a fixed obligation for payments linked to an underlying floating rate. It does not require exchanging the full principal represented by the position's notional.
 
 A long pays fixed and receives floating. A short receives fixed and pays floating. Both refer to the same market and expiry, but they have different funding requirements and risks.
 
-For borrowers and lenders, the rates position is separate from the loan or deposit in the underlying lending protocol. For traders, the position provides rate exposure without creating that underlying loan or deposit.
+For traders, the position provides rate exposure without creating an underlying loan or deposit.
 
 ## How execution works
 

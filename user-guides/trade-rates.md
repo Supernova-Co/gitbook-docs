@@ -14,7 +14,7 @@ Read [Long vs Short](../rates-trading/editor.md) before choosing a direction.
 {% step %}
 ### Access and fund your account
 
-Open [beta.rates.exchange](https://beta.rates.exchange). Follow [Fund & Withdraw](../get-started/fund-and-withdraw.md) and confirm your funds are available.
+Open [Rates Exchange](https://beta.rates.exchange). Follow [Fund & Withdraw](../get-started/fund-and-withdraw.md) and confirm your funds are available.
 {% endstep %}
 {% step %}
 ### Review the market

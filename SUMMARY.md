@@ -48,8 +48,6 @@
 
 ## Resources
 
-* [API Documentation](https://staging-api.supernova.vision/docs)
-
 * [Glossary](glossary.md)
 * [Troubleshooting & Support](resources/troubleshooting.md)
 * [Terms of Use](legal/terms-of-use.md)

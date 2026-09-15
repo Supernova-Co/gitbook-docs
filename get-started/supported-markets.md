@@ -1,6 +1,6 @@
 # Supported Markets
 
-Rates Exchange is live in private beta at [beta.rates.exchange](https://beta.rates.exchange).
+Trade on [Rates Exchange](https://beta.rates.exchange).
 
 ## Available markets
 
@@ -8,6 +8,11 @@ Rates Exchange is live in private beta at [beta.rates.exchange](https://beta.rat
 | --- | --- | --- | --- |
 | Aave | USDC borrow rate | Ethereum mainnet | Monthly |
 | Aave | USDT borrow rate | Ethereum mainnet | Monthly |
+
+## Market schedule
+
+- **Expires:** Last Friday of the month at 15:00 UTC.
+- **Opens:** Approximately two weeks before the expiration month begins.
 
 ## Request a market
 

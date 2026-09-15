@@ -20,6 +20,14 @@ Liquidation charges are separate from ordinary execution charges. A vault redemp
 
 Account-transfer costs are separate from these market and vault charges.
 
+## Gas balances
+
+Rates Exchange handles L2 gas through a pre-funded balance, so you do not pay network gas directly from your wallet for each action. Each collateral token has its own gas balance: USDC markets use USDC, and USDT markets use USDT.
+
+Swaps, deposits, and withdrawals typically use about **$0.01 per action** from this balance. These gas costs are separate from trading and other fees.
+
+If the balance falls below the minimum, these flows can automatically top it up using the same collateral token from your funding account and, if needed, your wallet.
+
 ## Comparing a quote with a result
 
 Check the notional, remaining term, fixed payment, floating accrual, execution costs, and exit outcome. For a hedge, include the underlying lending or borrowing result as well.

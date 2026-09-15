@@ -2,15 +2,16 @@
 
 A Rates Exchange market is defined by an underlying rate and an expiry. Use both when identifying the exposure you intend to trade.
 
-## Current beta markets
+## Current markets
 
 | Property | Description |
 | --- | --- |
 | Underlying protocol | Aave |
 | Underlying rates | USDC and USDT borrow rates |
 | Underlying network | Ethereum mainnet |
-| Expiration schedule | Monthly |
-| Trading interface | [Rates Exchange private beta](https://beta.rates.exchange) |
+| Expiration schedule | Last Friday of the month at 15:00 UTC |
+| Market opens | Approximately two weeks before the expiration month begins |
+| Trading interface | [Rates Exchange](https://beta.rates.exchange) |
 
 The underlying network identifies the source market. It does not by itself identify the network or asset accepted for account funding.
 

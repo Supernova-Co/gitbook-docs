@@ -1,34 +1,46 @@
 # Fund & Withdraw
 
-Use [beta.rates.exchange](https://beta.rates.exchange) to access the Rates Exchange private beta and manage the funds used for your rates positions.
+Use [Rates Exchange](https://beta.rates.exchange) to manage the funds used for your rates positions.
+
+## Your accounts
+
+| Account | What it holds |
+| --- | --- |
+| Wallet | Your tokens outside Rates Exchange, used to fund your account and receive withdrawals. |
+| Funding account | Deposited tokens available to move into an isolated account, cover gas top-ups, or withdraw. These funds do not back positions. |
+| Isolated account | Funds allocated to a specific market. Only funds in this account back positions in that market. |
+
+Funds in your wallet, funding account, or another market’s isolated account do not count toward a position’s collateral.
 
 ## Before you start
 
 Your Rates Exchange position is separate from any loan or lending deposit you hold on Aave. Funding your Rates Exchange account does not create or repay an underlying loan, and withdrawing from it does not withdraw your underlying lending deposit.
 
-The network listed on [Supported Markets](supported-markets.md) identifies the underlying borrow-rate market. Check the funding instructions in the beta for the assets and networks accepted for transfers.
+Collateral must match the underlying loan token: **USDC for USDC borrow-rate markets, and USDT for USDT borrow-rate markets**.
+
+Check the transfer network and destination in [Rates Exchange](https://beta.rates.exchange) before sending funds.
 
 ## Fund your account
 
 {% stepper %}
 {% step %}
-### Open the private beta
+### Open Rates Exchange
 
-Go to [beta.rates.exchange](https://beta.rates.exchange) and access the account you intend to use for your rates positions.
+Go to [Rates Exchange](https://beta.rates.exchange) and access the account you intend to use for your rates positions.
 {% endstep %}
 
 {% step %}
-### Review the funding instructions
+### Deposit USDC or USDT
 
-Follow the funding instructions provided in the beta. Check the transfer asset, network, destination, and amount before authorizing a transfer, along with any applicable transaction costs.
+Deposit the token for your market into your Rates Exchange funding account: **USDC for USDC markets, or USDT for USDT markets**. Confirm the amount, transfer network, and destination before authorizing the deposit.
 {% endstep %}
 
 {% step %}
-### Check your balance before opening a position
+### Allow for gas and confirm your deposit
 
-Confirm that the funding has completed and the funds are available in your Rates Exchange account before opening a position.
+Swaps, deposits, and withdrawals typically cost **$0.01 per action**, paid from a separate gas balance in the same token. When it runs low, Rates Exchange can automatically top it up from your funding account and, if needed, your wallet.
 
-A long rate position pays its fixed obligation upfront. A short rate position requires collateral to support its floating-payment obligations. Review the requirements for the position you intend to open.
+After the deposit completes, confirm the funds appear in your funding account's available balance. Funds used for gas top-ups are kept separately from that balance. See [Gas balances](../rates-trading/fee.md#gas-balances).
 {% endstep %}
 {% endstepper %}
 
@@ -44,15 +56,17 @@ Removing collateral from an open short must leave the position within its requir
 {% endstep %}
 
 {% step %}
-### Review the withdrawal instructions
+### Withdraw available funds
 
-Follow the withdrawal instructions provided in the beta. Check the available amount, destination, transfer asset, network, and any applicable costs before authorizing the withdrawal.
+Choose USDC or USDT and an amount within your available funding balance. Confirm the destination and transfer network, then authorize the withdrawal.
+
+Withdrawal gas is paid from the gas balance for that token, typically about **$0.01 per action**. An automatic gas top-up may use funds from your funding account or wallet.
 {% endstep %}
 
 {% step %}
-### Confirm receipt
+### Confirm the funds arrived
 
-Check that the withdrawal has completed and the funds have arrived at the intended destination. A submitted request should not be treated as a completed transfer.
+Once the transfer completes, confirm the USDC or USDT has arrived at the destination on the selected network. A decrease in your Rates Exchange balance alone does not confirm receipt.
 {% endstep %}
 {% endstepper %}
 

@@ -2,7 +2,7 @@
 
 ## Underlying rate
 
-The rate source used to calculate a market's floating accrual. The current beta covers Aave USDC and USDT borrow rates on Ethereum mainnet; a complete market identity also needs its source market and expiry.
+The rate source used to calculate a market's floating accrual. Current markets cover Aave USDC and USDT borrow rates on Ethereum mainnet; a complete market identity also needs its source market and expiry.
 
 ## Implied rate
 
