@@ -1,46 +1,34 @@
-# Liquidation
+# Liquidation & Loss Allocation
 
-Anyone can liquidate an underwater short via `liquidate(mktId, user, percent)`.
+Liquidation addresses a short position that no longer meets the market's health requirements. Loss allocation describes what happens when available backing cannot meet all obligations. These are related but different questions.
 
-## Standard flow
+## Why a short can become liquidatable
 
-1. **Cancel orders** — locked collateral in resting LOB orders is released.
-2. **Accrue funding** — crystallises floating payments into `base` (may trigger bad debt).
-3. **Verify underwater** — reverts if position is actually solvent (anti-griefing).
-4. **Close via vAMM** — short notional is bought back using the user's collateral.
-5. **Penalty** — 5% of collateral consumed, split 90% liquidator / 10% protocol.
+The cost of closing the remaining short can rise, while floating payments can reduce its collateral over time. A short therefore needs monitoring even when the implied rate has not moved sharply.
 
-Partial Liquidation use `percent` in `[10%, 100%]` (or `0` for full close). Penalty and bad-debt logic scale proportionally.
+## Closing or transferring exposure
 
-***
+Liquidation can involve closing exposure through market execution or transferring exposure to another adequately backed participant. The applicable process determines what happens to the position, collateral, and any charges.
 
-## Liquidation Flow
+Outstanding orders and floating accrual matter when evaluating the position. A displayed balance before accounting for them is not a complete measure of its condition.
 
-| Amount                                 | Recipient        | How                              |
-| -------------------------------------- | ---------------- | -------------------------------- |
-| Collateral used to close vAMM position | **Vault**        | `vault.accrueBase(baseConsumed)` |
-| Uncoverable shortfall                  | **Vault** (loss) | `vault.accrueBadDebt(shortfall)` |
-| 5% penalty × 90%                       | **Liquidator**   | Clearing-house credit            |
-| 5% penalty × 10%                       | **Protocol**     | Manager clearing-house balance   |
+## Vault losses
 
-**Net to vault:** `baseConsumed − badDebt`. Healthy liquidations are positive; bad-debt events absorb the gap.
+When the vault absorbs a shortfall, its value can fall. LPs bear that effect through their interest in the vault. A mechanism that prevents negative recorded vault value does not make the economic loss disappear.
 
-If collateral is insufficient to close, clearing-house credit is used first; any residual shortfall becomes vault bad debt.
+## Participant payment risk
 
-***
+If the market cannot meet its floating obligations in full, longs may receive less than expected. A long's prepaid fixed obligation removes an unpaid fixed liability; it does not guarantee the floating receipts needed for a hedge.
 
-## Foreclosure Flow
+Keep payment-shortfall risk distinct from liquidation of the long itself and from liquidation of an underlying loan.
 
-Foreclosure bypasses the vAMM and causes no price impact nor cascade risk.
+## What to monitor
 
-```
-new_caller.base  = caller.base + capitalInfusion + user.base
-new_caller.quote = caller.quote + user.quote
-user wiped       → base = 0, quote = 0
-```
+Short holders should monitor health and accrual. Hedgers should consider what reduced or interrupted receipts would mean for their underlying exposure. Vault participants should consider both counterparty exposure and market shortfalls.
 
-The caller injects fresh capital from their clearing-house balance and absorbs the position. The **combined** book must pass the strict 67.5% safe check or the transaction reverts.
+See [Collateral, Health & Liquidation](../rates-trading/interactive-blocks.md), [Vault Guardrails](vault/vault-guardrails.md), and [Risks & Trust Assumptions](../security/risks-and-trust-assumptions.md).
 
-Governance can toggle foreclosure via `setIsForeclosureAllowed`. Prefer it in volatile, low-liquidity conditions where a vAMM close would move price sharply.\
-\
-For more, see [Liquidation Threshold](https://supernova-10.gitbook.io/parrate/rates-trading/interactive-blocks) and [Position Health](https://supernova-10.gitbook.io/parrate/market-mechanics/position-health).&#x20;
+<a id="liquidation"></a>
+<a id="standard-flow"></a>
+<a id="liquidation-flow"></a>
+<a id="foreclosure-flow"></a>

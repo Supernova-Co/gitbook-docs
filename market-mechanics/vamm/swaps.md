@@ -1,29 +1,23 @@
 # Swaps
 
-#### Constant-product pricing <a href="#constant-product-pricing" id="constant-product-pricing"></a>
+A swap exchanges fixed and floating rate exposure for a market's remaining term. A long pays fixed and receives floating; a short receives fixed and pays floating.
 
-Users trade across the invariant:
+## Constant-product pricing
 
-* **Base-in → Quote-out**: _Pay fixed, receive float_
-* **Quote-in → Base-out**: _Receive fixed, pay float_
+<a id="constant-product-pricing"></a>
 
-Fees are charged on the **output** leg; fees stay in reserves (slightly growing k).
+The vAMM quotes using a constant-product relationship between virtual reserves. A trade changes the reserve ratio, so the marginal quote after execution can differ from the quote before it.
 
-#### Deterministic decay <a href="#deterministic-decay" id="deterministic-decay"></a>
+The price impact depends on the trade and the available curve depth. Virtual reserve quantities do not represent a user's deposited collateral.
 
-The fixed leg decays linearly over the term. Define:&#x20;
+## Time decay
 
-$$
-\alpha(t) = \frac{t - t_0}{T - t_0},\qquad 0 \le \alpha(t) \le 1,
-$$
+<a id="deterministic-decay"></a>
 
-and the decayed expected price: &#x20;
+As expiry approaches, the fixed obligation represented by the remaining term becomes smaller at an unchanged implied rate. Time decay and a change in the market's annualized rate are different effects.
 
-$$
-p_t = p_0 \times (1 - \alpha(t)).
-$$
+## Execution and costs
 
-This ensures the fixed leg trends toward 0 at maturity.
+Routing can combine order-book and vAMM liquidity. Review the executed size and rate, applicable costs, and resulting position rather than assuming the initial quote describes every fill.
 
-
-
+See [Pricing & Mark Rates](README.md), [Orders & Execution](../order-book.md), and [Fees](../../rates-trading/fee.md).

@@ -1,17 +1,35 @@
-# Mission: Bring Rates Predictability On-chain
+# Mission: Bring Rate Predictability Onchain
 
-Assets trade freely on-chain, **but rates aren’t tradable.** As a result, the volatility of rates cannot be hedged out, views on rates cannot be expressed, and real rates cannot be discovered.
+Every economy runs on a predictable cost of capital.
 
-Institutions and sophisticated players are rapidly moving on-chain, including institutional borrowers, stablecoin neobanks, and risk curators. They demand _**rates predictability**_ from financial applications they interact with.
+Humanity does not advance simply because more assets can be traded. It advances when capital can be deployed with confidence, allowing borrowers to plan, businesses to invest, and institutions to manage risk.
 
-**However, on-chain markets are mostly built for speculation.** Borrowers suffers from volatile interest. Stablecoin holders must tolerate FX volatility to hold money on-chain. The current market is incomplete, and not prepared for the institutions and real-world activities that’s rapidly moving on-chain.
+This is the promise of DeFi 2.0: **predictable capital formation for real economic activity.**
 
-Rates Exchange is the fastest **CLOB-based rates exchange** for trading and hedging economically important numbers that don’t have liquid spot markets, starting with interest rate and FX.
+## Trading Is Here. Hedging Is Not.
 
-**However, we are NOT just building markets for traders.**
+Onchain finance has built powerful infrastructure for trading through spot DEXs, perpetual DEXs, and centralized exchanges.
 
-We build **developer-friendly, easily integratable APIs** so that institutions or their customers can be one-API-call or one-click away from predictable rates while inheriting all of bluechip DeFi’s security guarantees and liquidity.
+But the infrastructure for hedging remains missing.
 
-Rates market trades **18 trillion per day** in TradFi. We believe on-chain rates market will be equally significant in 10 years for its global open access, unified liquidity, 24/7 availability, and transparency.
+Borrowers are exposed to volatile interest rates. Stablecoin holders must tolerate currency risk to keep and deploy money onchain. Institutions, stablecoin neobanks, and risk curators cannot reliably manage these exposures with existing financial applications.
 
-Rates Exchange is set out to build the **canonical rate exchange** for this market.
+Trading allows capital to move. **Hedging allows capital to commit.**
+
+Rates Exchange provides both sides of this market.
+
+### For Traders
+
+Rates Exchange is a high-performance, CLOB-based exchange for trading economically important rates that lack liquid spot markets, starting with interest rates and FX.
+
+Traders provide liquidity, express views on rates efficiently, and enable transparent price discovery.
+
+### For Hedgers
+
+Rates Exchange is a hedging layer built on top of the protocols institutions already use. Borrowers and applications can access predictable rates through one API call or one click while retaining the security and liquidity of protocols such as Aave and Morpho.
+
+We are starting with interest rates, followed by compute, FX, and fixed-rate equity perps.
+
+Traditional rates markets trade approximately **$18 trillion per day**. We believe onchain rates markets can become equally significant over the next decade, powered by global access, unified liquidity, 24/7 availability, and transparent settlement.
+
+Rates Exchange is building the **canonical exchange for onchain rates**, connecting those who trade risk with those who need to hedge it.

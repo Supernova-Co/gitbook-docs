@@ -1,57 +1,11 @@
 # How to Earn Boosted Fixed Rate
 
-A step-by-step guide to boosting your Aave / Morpho lending yield with a short fixed-rate position on Rates Exchange.
+<a id="step-1-lend-on-aave-morpho"></a>
+<a id="step-2-short-fixed-rate-when-fixed-float"></a>
+<a id="step-3-choose-your-execution"></a>
+<a id="step-4-earn-boosted-fixed-rate"></a>
+<a id="summary"></a>
 
-***
+This walkthrough has been consolidated into [Yield Boost](README.md).
 
-## Step 1 — Lend on Aave / Morpho
-
-Deposit into the underlying money market as you normally would — same collateral, same counterparty risk, same floating yield.
-
-Your capital stays in the protocol's liquid variable-rate pool. Nothing changes about how you lend or withdraw.
-
-***
-
-## Step 2 — Short fixed rate when fixed > float
-
-Open a **short fixed-rate** position on Rates Exchange: you **receive fixed** and **pay floating**.
-
-Enter only when the market's implied fixed rate is **above** the current floating lending rate — that spread is your boost.
-
-$$
-\text{boost} \approx \text{fixed rate} - \text{floating rate}
-$$
-
-Typical boost: **200–250 bps**.
-
-***
-
-## Step 3 — Choose your execution
-
-| Method           | When to use                                              |
-| ---------------- | -------------------------------------------------------- |
-| **Market order** | Execute immediately at the best available implied rate   |
-| **Limit order**  | Wait for your target fixed rate or better before filling |
-
-Both route to the order book or vAMM, whichever offers the better price.
-
-***
-
-## Step 4 — Earn boosted fixed rate
-
-Once the short is open, floating payments on Rates Exchange are offset by floating yield from your Aave / Morpho deposit:
-
-$$
-\text{net yield} \approx \underbrace{\text{floating from Aave}}_{\text{earn}} - \underbrace{\text{floating on Rates Exchange}}_{\text{pay}} + \underbrace{\text{fixed from Rates Exchange}}_{\text{earn}} \;\approx\; \text{boosted fixed rate}
-$$
-
-You keep \~**99.9%** of capital on Aave / Morpho and can withdraw anytime liquidity permits. Close the Rates Exchange short separately when you want to return to pure floating yield.
-
-***
-
-## Summary
-
-1. **Lend** on Aave / Morpho (floating yield, full liquidity)
-2. **Short fixed rate** on Rates Exchange when fixed > float
-3. **Market or limit order** — your choice on timing and price
-4. **Earn** boosted fixed rate while staying flexible on withdrawals
+See [How to use it](README.md#how-to-use-it) for the steps, [How it works](README.md#how-it-works) for the two positions, and [Risks and limitations](README.md#risks-and-limitations) before opening a hedge.

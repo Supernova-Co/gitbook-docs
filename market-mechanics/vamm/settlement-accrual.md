@@ -1,18 +1,31 @@
-# Settlement Accrual
+# Settlement
 
-#### Settlement Accrual <a href="#funding-accrual" id="funding-accrual"></a>
+Settlement accounts for the fixed and floating obligations of rates positions across a market. It applies to market positions regardless of the venue that provided execution.
 
-Long Positions continuously accrue Settlement based upon oracle's cumulative growth. At a high level:
+## Fixed and floating obligations
 
-* Let `growthRay` be the oracle growth (Ray).
-* Convert to notional : $$\text{growth} = \text{scaleRayToNotional}(\text{growthRay})$$&#x20;
-* Funding for a position of size Q (quote) is:&#x20;
+The long pays the fixed obligation upfront; the short receives it upfront. Floating payments then accrue according to the underlying rate over the holding period.
 
-$$
-\text{funding} \;=\; \text{growth} \times |Q|
-$$
+The floating side increases the long's balance and reduces the short's balance as it is accounted for.
 
-Sign:
+## Accrual and balance updates
 
-* $$Q > 0$$ (long float) -> **accrue** funding to base&#x20;
-* $$Q < 0$$ (short float) -> **deduct** funding from base &#x20;
+<a id="funding-accrual"></a>
+
+An accumulated rate measure tracks growth in the underlying obligation over time. A position's notional and the growth since its previous accounting point determine the floating amount to account for.
+
+Economic accrual, updating a stored position balance, and withdrawing funds are separate events. Describing accrual as continuous should not imply a continuous stream of wallet transfers.
+
+## Closing and expiry
+
+Before evaluating the outcome of a close or a health check, outstanding accrual must be considered. At expiry, final settlement resolves the market's remaining obligations.
+
+For hedgers, this settlement does not settle the separate Aave loan or deposit.
+
+## Shortfalls
+
+Settlement depends on the ability of the market to meet its obligations. A shortfall can affect collateral, vault value, and amounts received by participants. See [Liquidation & Loss Allocation](../liquidation.md).
+
+For the trader's view, see [Payments & PnL](../../rates-trading/payments-and-pnl.md).
+
+<a id="settlement-accrual"></a>

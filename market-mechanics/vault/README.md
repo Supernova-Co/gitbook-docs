@@ -1,24 +1,52 @@
-# SLP Vault
+# Vault Mechanics
 
-#### Core Functions
+The Rates Exchange vault supplies the capital behind vAMM execution. It takes the opposite side of the flow executed through that venue and participates in absorbing market losses.
 
-\
-The Vault acts as the protocol’s counterparty for each market. It absorbs net imbalances between longs and shorts and captures protocol fees to incentivize its depositors.
+## Shares and value
 
-1.  **Deposit or Withdraw liquidity at any time**
+Deposits receive vault shares; redemption exchanges shares for the value available under the vault's rules. Shares represent a proportional interest, not a promise to return the original deposit amount.
 
-    Deposits mint Vault shares that represent proportional ownership of the Vault’s assets and earnings, while withdrawals burn shares to redeem the underlying value. This design enables flexible participation and continuous capital availability without lockups.
-2. **Counterparty Management**\
-   The Vault passively takes the opposite side of net open interest. When one side of the market is larger, the Vault provides offsetting exposure, ensuring continuous price discovery and execution without requiring a perfectly balanced order book.
-3. **Fee Accrual**\
-   Trading and settlement fees flow directly to the Vault. In the early phase, 100% of these fees are redirected to incentivize LPs and bootstrap Vault liquidity. As the protocol matures, a portion may be routed to protocol treasury or insurance reserves.
+Net asset value, or NAV, brings together the vault's deposited capital and its realized and unrealized results:
 
-#### Vault LP Payout
+```text
+NAV = deposited capital, net of withdrawals + realized PnL + unrealized PnL
+Share price = NAV / outstanding shares
+```
 
-Liquidity Providers earn returns from the Vault based on market activity and funding dynamics. LP yield consists of:
+These expressions describe economic quantities without implementation scaling. NAV is floored at zero. Realized PnL includes settled income and losses; unrealized PnL accounts for the value of remaining exposure.
 
-1. **Fee Income** — LPs receive a proportional share of all trading and settlement fees generated in their market. Currently, 100% fees are directed to the vault.
-2. **Seeding Premium** — In markets expecting stronger natural long-rate demand, the Vault offers an additional yield premium, initially set at 100 bps, to incentivize early liquidity. A 100 bps fixed rate premium a 5% floating rate equates to approximately 20% APR on LP equity if rates remain stable.
-3. **Position PnL** — The Vault’s net position PnL contributes directly to LP returns. When the Vault’s aggregate exposure earns positive carry against traders, LPs gain; when traders or excess market liquidity outperform, LP returns can be negative.
+A participant's share of NAV is not a separate guaranteed payout. Keep deposited principal, share value, and realized income distinct when reviewing a result.
 
-LP payouts are periodically realized in the Vault’s base asset, reflecting each LP’s share of total Vault liquidity after accounting for accrued PnL, fees, and funding.
+## Income and losses
+
+The vault's income includes its share of vAMM execution fees and the funding spread on matched exposure. An early-withdrawal fee, where applicable, is retained by the vault.
+
+The vault also receives or pays floating settlement on its net exposure. Favorable settlement can add income; adverse settlement can reduce value. When liquidation proceeds are insufficient to cover a position's closing cost, losses absorbed by the vault also reduce the backing of LP shares.
+
+A favorable fee stream does not guarantee a positive total return. The applicable revenue allocation and costs must be considered alongside the risks the vault carries.
+
+## Exposure constraints
+
+The vault's ability to support more flow is constrained. Some actions can be limited when exposure or losses are too large relative to its backing.
+
+Guardrails constrain activity; they do not establish a guaranteed floor for LP returns. See [Vault Guardrails](vault-guardrails.md).
+
+## Deposits and withdrawals
+
+Deposits receive shares based on the vault's valuation. A redemption exchanges shares for their applicable value, after any withdrawal charges.
+
+A withdrawal request and its payout are separate stages. Redemption is subject to a withdrawal delay, and an exit before maturity can carry an early-withdrawal fee. Exposure restrictions can prevent a withdrawal when removing capital would leave the vault unable to support its obligations.
+
+Review the applicable timing and costs before requesting redemption. Withdrawable value can differ from deposited principal.
+
+At maturity, settlement of remaining market obligations affects the value available to participants. Do not assume maturity restores prior losses.
+
+## Further reading
+
+- [Provide Vault Liquidity](../../user-guides/provide-vault-liquidity.md)
+- [Liquidation & Loss Allocation](../liquidation.md)
+- [Settlement](../vamm/settlement-accrual.md)
+
+<a id="slp-vault"></a>
+<a id="core-functions"></a>
+<a id="vault-lp-payout"></a>

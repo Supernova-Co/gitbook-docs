@@ -21,23 +21,16 @@ layout:
 
 # Open Position
 
-**Fixed rates are settled upfront at position opening, while floating rates accrues over time during the position’s holding period.**&#x20;
+Opening a rates position creates exposure to a particular underlying rate and expiry. Check the notional, remaining term, execution terms, and funds required before submitting an order.
 
+## Position funding
 
+A long pays its fixed obligation upfront. A short receives the fixed payment and must provide sufficient collateral to back its future obligations. The fixed payment, total position collateral, and additional funds supplied by the user are different quantities.
 
-**Longs** pay the fixed rate at entry, fully satisfying their liabilities and eliminating liquidation risk.&#x20;
+The notional is the size of the rate exposure, not the amount transferred into the account.
 
+## Orders and positions
 
+An order becomes a position only when it executes. Resting orders can reserve funds or exposure, so funds committed to an order are not available for every other action.
 
-**Shorts** receive the fixed rate upfront and pay the floating rate over time. Since the floating rate can rise unpredictably, shorts face potential liquidation if their margin becomes insufficient to cover mark-to-market losses.  &#x20;
-
-
-
-**Initial Margin is calculated by:**&#x20;
-
-```
-Initial Margin = Notional Size * Implied Rate * Time Duration
-```
-
-
-
+For the walkthrough, see [Trade Rates](../user-guides/trade-rates.md). For reference, see [Market Specifications](market-specifications.md), [Orders & Execution](../market-mechanics/order-book.md), and [Collateral, Health & Liquidation](interactive-blocks.md).

@@ -1,44 +1,56 @@
 # Table of contents
 
-* [Mission: Bring Rates Predictability On-chain](README.md)
-* [Interest Rates Market](readme.md)
-* [Glossary](glossary.md)
+## About Rates Exchange
 
-## Fixed Rate Borrowing
+* [Mission: Bring Rate Predictability Onchain](README.md)
+* [Overview](overview.md)
+* [Core Contributors](core-contributors.md)
 
-* [User Guide: One-Click Fixing Rate](fixed-rate-borrowing/user-guide-one-click-fixing-rate/README.md)
-  * [Borrow at Fixed Rate From Aave / Morpho](fixed-rate-borrowing/user-guide-one-click-fixing-rate/borrow-at-fixed-rate-from-aave-morpho.md)
-  * [Lend at Boosted Fixed Rate on Aave / Morpho](fixed-rate-borrowing/user-guide-one-click-fixing-rate/lend-at-boosted-fixed-rate-on-aave-morpho.md)
-* [Fixed Rate Yield Boost](fixed-rate-borrowing/fixed-rate-yield-boost/README.md)
-  * [How to Earn Boosted Fixed Rate](fixed-rate-borrowing/fixed-rate-yield-boost/how-to-earn-boosted-fixed-rate.md)
+## Get Started
 
-## Rates Trading
+* [Rates Exchange Basics](get-started/basics.md)
+* [Supported Markets](get-started/supported-markets.md)
+* [Fund & Withdraw](get-started/fund-and-withdraw.md)
 
-* [Long Rate](rates-trading/editor.md)
-* [Short Rate](rates-trading/markdown.md)
-* [Open Position](rates-trading/images-and-media.md)
-* [Close Position](rates-trading/integrations.md)
-* [Liquidation Threshold](rates-trading/interactive-blocks.md)
-* [Fee](rates-trading/fee.md)
+## User Guides
 
-## Market Mechanics
+* [Borrow at a Fixed Rate](fixed-rate-borrowing/user-guide-one-click-fixing-rate/borrow-at-fixed-rate-from-aave-morpho.md)
+* [Lend with Yield Boost](fixed-rate-borrowing/fixed-rate-yield-boost/README.md)
+* [Trade Rates](user-guides/trade-rates.md)
+* [Provide Vault Liquidity](user-guides/provide-vault-liquidity.md)
 
-* [Liquidity Venues](market-mechanics/bootstrap-liquidity.md)
-* [SLP Vault](market-mechanics/vault/README.md)
-  * [Vault Guardrails](market-mechanics/vault/vault-guardrails.md)
-* [vAMM](market-mechanics/vamm/README.md)
+## Trading & Positions
+
+* [Long vs Short](rates-trading/editor.md)
+* [Market Specifications](rates-trading/market-specifications.md)
+* [Orders & Execution](market-mechanics/order-book.md)
+* [Collateral, Health & Liquidation](rates-trading/interactive-blocks.md)
+* [Payments & PnL](rates-trading/payments-and-pnl.md)
+* [Closing & Expiry](rates-trading/integrations.md)
+* [Fees](rates-trading/fee.md)
+
+## Protocol Mechanics
+
+* [Architecture & Routing](market-mechanics/bootstrap-liquidity.md)
+* [Pricing & Mark Rates](market-mechanics/vamm/README.md)
   * [Swaps](market-mechanics/vamm/swaps.md)
-  * [Settlement Accrual](market-mechanics/vamm/settlement-accrual.md)
-* [Order Book](market-mechanics/order-book.md)
-* [Position Health](market-mechanics/position-health.md)
-* [Liquidation](market-mechanics/liquidation.md)
-* [Key Parameters](market-mechanics/key-parameters.md)
+* [Settlement](market-mechanics/vamm/settlement-accrual.md)
+* [Collateral Accounting](market-mechanics/position-health.md)
+* [Liquidation & Loss Allocation](market-mechanics/liquidation.md)
+* [Vault Mechanics](market-mechanics/vault/README.md)
+  * [Vault Guardrails](market-mechanics/vault/vault-guardrails.md)
+* [Market Parameters](market-mechanics/key-parameters.md)
 
-## Security
+## Security & Risk
 
+* [Risks & Trust Assumptions](security/risks-and-trust-assumptions.md)
 * [Audits](security/audits.md)
 
-## Legal
+## Resources
 
+* [API Documentation](https://staging-api.supernova.vision/docs)
+
+* [Glossary](glossary.md)
+* [Troubleshooting & Support](resources/troubleshooting.md)
 * [Terms of Use](legal/terms-of-use.md)
 * [Privacy Policy](legal/privacy-policy.md)

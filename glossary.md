@@ -1,44 +1,59 @@
 # Glossary
 
-Each Interest Rate Market is defined by two key parameters: the _**Underlying Market**_ and the _**Expiry**_. Each market trades its _**implied rate**_, which is used to price movements in the underlying rate. While trading occurs on the implied rate, _**continuous cash settlement**_ is based on the actual _**underlying rate.**_
+## Underlying rate
 
-**Underlying Market**\
-The base lending market that determines the floating rate benchmark used for the swap. Examples include specific Aave or Morpho markets (e.g., Aave USDC, Morpho USDC/cbBTC).
+The rate source used to calculate a market's floating accrual. The current beta covers Aave USDC and USDT borrow rates on Ethereum mainnet; a complete market identity also needs its source market and expiry.
 
-**Expiry**
+## Implied rate
 
-The maturity date of the Interest Rate Market. It specifies the settlement point when all open rate positions in that market are closed and PnL is realized.<br>
+The annualized rate expressed through trading. It describes the remaining rate exposure and is distinct from the realized underlying floating rate.
 
-**Debt Unit (DU)**\
-Each DU represents the borrow rate on **1 unit of notional debt** in the underlying money market. For example, in an Aave USDC market, each DU represents the variable borrow rate accrued on **1 USDC of debt**.
+## Notional
 
-\
-**Notional Size**
+The size of the rate exposure. Notional is not the amount of funds deposited or the value of collateral backing the position.
 
-The reference amount that defines the rate exposure of a position. It represents how much of the underlying market’s rate the user is long or short. Notional Size is measured in _**Debt Units (DU)**_, where **1 DU** equals the rate exposure of 1 unit of notional debt in the underlying market.\
-\
-\
-**Implied APR (Fixed APR)**
+## Expiry and remaining term
 
-The market-derived fixed rate representing the consensus expectation of the average future rate for the selected underlying market and tenor. When a position is opened, this becomes the fixed rate paid or received, depending on long or short exposure.
+Expiry is the end of a market's term. Remaining term is the time left until that expiry. Monthly expiration does not mean a position opened mid-term lasts a full month.
 
-**Underlying Rate (Floating APR)**\
-The current variable rate of the underlying market (e.g., Aave or Morpho), reflecting real-time utilization conditions from the Underlying Market.<br>
+## Long rate
 
-**Long Implied APR**\
-A position that fixes the borrowing rate by paying the implied APR **up-front** in exchange for receiving the floating underlying rate over time. The fixed-rate liability is settled at entry.<br>
+A position that pays fixed upfront and receives floating. It can be used to hedge floating borrowing costs or to express a rate view.
 
-**Short Implied APR**\
-A position that receives the implied APR and pays the floating underlying rate over time. This exposure requires **margin** to cover mark-to-market fluctuations and ongoing settlement.\
-\
-**Margin**\
-Capital posted to open and maintain a Short Implied APR rate position. Margin absorbs mark-to-market PnL and ongoing settlement flows, ensuring the position remains solvent while supporting the selected notional exposure.
+## Short rate
 
-**Settlement**
+A position that receives fixed upfront and pays floating. It requires collateral and can be used to hedge floating lending income or express a rate view.
 
-The continuous transfer of floating-rate payments to the long (pay-fixed) side based upon the underlying rate. It reflects how the floating rate accrues over time and is credited to the long’s account, representing the realized return from the underlying market relative to the fixed rate paid upfront.
+## Fixed payment
 
-**My Fixed Rate**\
-The weighted-average fixed rate of the user’s open position(s), determined by the implied rate(s) at the time of entry.
+The fixed obligation exchanged at entry for the market's remaining term. It is distinct from the underlying loan principal and from a short's additional collateral.
 
-&#x20;
+## Collateral
+
+Funds backing a position's obligations. Available account balance, position collateral, and funds reserved for orders should be distinguished.
+
+## Mark and execution price
+
+A mark is used for valuation or risk checks under the market's rules. An execution price is the price at which a trade actually fills. They need not be equal.
+
+## Accrual and settlement
+
+Accrual measures the amount earned or owed over time. Settlement accounts for obligations in balances. Neither term should be assumed to mean a transfer to an external wallet.
+
+## PnL
+
+Profit and loss. A complete rates-position result considers fixed payments, floating accrual, closing value, and costs. A hedged strategy also includes the underlying loan or deposit.
+
+## Vault shares
+
+A proportional interest in a vault. Share value reflects the vault's accounting for assets, obligations, income, and losses; it is not a guarantee of deposited principal.
+
+## Health
+
+A measure of whether a position has sufficient backing under its market's rules. Opening requirements and liquidation conditions are different checks.
+
+## Further reading
+
+- [Rates Exchange Basics](get-started/basics.md)
+- [Market Specifications](rates-trading/market-specifications.md)
+- [Collateral Accounting](market-mechanics/position-health.md)

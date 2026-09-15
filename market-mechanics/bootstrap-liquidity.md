@@ -1,37 +1,38 @@
-# Market Liquidity
+# Architecture & Routing
 
-Markets launch with zero open interest. Two actors seed liquidity together.
+Rates Exchange separates the account holding funds, the execution venues, the market positions, and floating-rate settlement.
 
-***
+## Components
 
-## Vault — vAMM counterparty
+| Component | Responsibility |
+| --- | --- |
+| Account and clearing | Records available funds and funds assigned to market positions |
+| Router | Coordinates execution across available venues |
+| Order book | Matches orders with resting liquidity |
+| vAMM | Quotes through a virtual pricing curve |
+| Vault | Acts as counterparty to vAMM flow and participates in market loss absorption |
+| Rate data and settlement | Supplies the underlying-rate information used to account for floating payments |
 
-* Deposits initialise `totalAssets` and seed the vAMM with `base = quote = √k` reserves (typically sized to vault TVL).
-* The vault is the **silent counterparty** to every vAMM swap. Trade flow that reaches the pool lands on the vault's book via `accrueBase` / `vaultPnL`.
-* The vault does not post orders. Its exposure is the aggregate net of all vAMM flows.
+## An order's path
 
-***
+An order is evaluated against available order-book and vAMM liquidity. Execution may involve more than one venue. The resulting exposure and balance changes belong to the same rates market.
 
-## MM — order book limit orders
+Order-book counterparties and the vault are different sources of liquidity. The vault does not need to be the counterparty to a trade matched entirely between users.
 
-* Posts two-sided limit-orders around fair value of the fixed rate&#x20;
-* Runs **vAMM↔oracle arbitrage** when implied rate deviates from float, re-anchoring the pool and limiting vault counterparty swings.
+## Constraints matter
 
-***
+A pricing curve is not a guarantee that every trade size can execute. Available liquidity, collateral requirements, and market constraints affect execution. A quote, an accepted order, and a completed fill should be distinguished.
 
-## Why both are needed
+## Related mechanics
 
-| Without vault                                            | Without MM bot                                   |
-| -------------------------------------------------------- | ------------------------------------------------ |
-| No vAMM fallback when LOB has no match                   | All flow hits thin vAMM; vault takes every trade |
-| Lenders/borrowers with no LOB match have nowhere to fill | vAMM rate decouples; vault marks down sharply    |
+- [Orders & Execution](order-book.md)
+- [Pricing & Mark Rates](vamm/README.md)
+- [Collateral Accounting](position-health.md)
+- [Settlement](vamm/settlement-accrual.md)
+- [Vault Mechanics](vault/README.md)
 
-***
-
-## Flow Routing&#x20;
-
-1. **Most flow → LOB.** The router sends each order to the cheaper venue. With a tight MM ladder (±2 bps), the LOB wins most price comparisons. Vault is not involved.
-2. **Residual flow → vAMM.** Large orders or one-sided books spill to the pool. Vault takes counterparty PnL.
-3. **Arb loop anchors vAMM.** After large vAMM swaps, the MM corrects rate divergence&#x20;
-
-At baseline launch throughput, the split is roughly **55% LOB / 45% vAMM**. LOB share rises as depth grows. At very high throughput the vAMM share climbs again (throughput ceiling).
+<a id="market-liquidity"></a>
+<a id="vault--vamm-counterparty"></a>
+<a id="mm--order-book-limit-orders"></a>
+<a id="why-both-are-needed"></a>
+<a id="flow-routing"></a>

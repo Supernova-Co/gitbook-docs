@@ -19,26 +19,40 @@ layout:
     visible: true
 ---
 
-# Liquidation Threshold
+# Collateral, Health & Liquidation
 
-Liquidation closes an underwater **short** position before losses exceed posted collateral. \
-\
-Currently, the system doesn't allow any explicit leverage. Long side settle all their fixed rate liabilities upfront and don't face any liquidation risk.&#x20;
+A short receives a fixed payment at entry and owes floating payments over time. Its collateral must remain sufficient under the market's health rules.
 
-Since short side's liability is the floating rate, short side's floating rate liability accruals continuously and might get liquidated when a) implied rate rises sharply or b) when floating rate stays high for a prolonged period of time.&#x20;
+## What changes health?
 
-***
+- A higher implied rate can increase the cost of closing a short.
+- Floating payments can reduce the collateral remaining in the position.
+- Adding funds, withdrawing funds, trading, or reserving funds for orders can change what is available to support the position.
 
-## Liquidation Threshold&#x20;
+A persistently high floating rate can weaken health even without a sharp move in the implied rate.
 
-A short is liquidatable when its health ratio exceeds the market LTV (typically **75%**):
+## Opening requirements and liquidation requirements
 
-$$
-\text{health} = \frac{|Q| \times \text{vAMM price} / 10^{18} \times 10^5}{\text{base}}
-$$
+The requirement to open or modify a position is distinct from the condition that makes an existing position liquidatable. Do not use the liquidation threshold as a target for sizing a new position.
 
-Health is checked against a **TWAP** price (not spot) and after funding accrues into collateral. A high floating rate alone can push a short toward liquidation over time.
+The market's risk price is also distinct from the price at which an order will execute. See [Pricing & Mark Rates](../market-mechanics/vamm/README.md).
 
-***
+## Managing collateral
 
-For full mechanics, money flows, and vault guardrails, see [Position Health](../market-mechanics/position-health.md), [Liquidation](../market-mechanics/liquidation.md), and [Vault Guardrails](../market-mechanics/vault/vault-guardrails.md).
+Monitor accrued obligations alongside the balance shown for the position. Funds reserved for orders or required by open positions should not be assumed to be withdrawable.
+
+Review the effect of a withdrawal on remaining health before removing funds. Closing exposure and adding collateral have different effects on the account.
+
+## Liquidation
+
+A short that fails the required health condition can be liquidated. Liquidation can reduce or close exposure and consume collateral, with applicable charges affecting what remains.
+
+A long's prepaid fixed obligation does not remove risks in the underlying loan, or risks of market losses and reduced payments on Rates Exchange.
+
+## Further reading
+
+- [Collateral Accounting](../market-mechanics/position-health.md)
+- [Liquidation & Loss Allocation](../market-mechanics/liquidation.md)
+- [Risks & Trust Assumptions](../security/risks-and-trust-assumptions.md)
+
+<a id="liquidation-threshold"></a>

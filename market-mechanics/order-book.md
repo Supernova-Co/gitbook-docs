@@ -1,10 +1,32 @@
-# Order Book
+# Orders & Execution
 
-Orders on Rates Exchange Interest Rate Market are quoted and executed based on the **Implied APR**, representing the yield-derived price of the underlying rate exposure.
+Rates Exchange orders express a desired rate exposure in a market with a specific expiry.
 
-**Order Types**
+## Market and limit orders
 
-* **Market Order** — Executes instantly at the best available implied rate, automatically routing to whichever venue—order book or vAMM—offers the most favorable price.
-* **Limit Order** — Executes only at the trader’s chosen implied rate or a better one. Limit orders may also route to either venue depending on pricing conditions.
+| Order | Purpose | Important distinction |
+| --- | --- | --- |
+| Market | Seek execution against available liquidity | The resulting execution depends on available rates and size |
+| Limit | Specify a rate or better | An order can remain unfilled |
 
-All limit orders remain active until filled or manually cancelled (Good-Til-Cancelled). When a market reaches maturity, its order book closes automatically and any remaining open orders are cancelled.
+Execution can use order-book or vAMM liquidity. Do not assume that placing a limit order means it must execute solely against another resting order.
+
+## Order lifecycle
+
+A resting order is different from an open position. Check whether an order is active, filled, partially filled, or cancelled before deciding what exposure remains.
+
+Limit orders are described as good until cancelled. At market expiry, the order book closes and remaining open orders are cancelled.
+
+## Funds reserved for orders
+
+Orders can reserve funds or existing exposure so that execution is backed. Reserved amounts are not freely reusable for another order, position, or withdrawal.
+
+An order's continued executability depends on the account's ability to support the resulting trade. An apparent order-book level should not be treated as an unconditional promise of execution.
+
+## Cancelling and closing
+
+Cancelling an unfilled order removes an execution instruction. Closing an existing position trades out of exposure. These are different actions, and cancelling an order does not erase exposure from earlier fills.
+
+See [Trade Rates](../user-guides/trade-rates.md), [Open Position](../rates-trading/images-and-media.md), and [Collateral Accounting](position-health.md).
+
+<a id="order-book"></a>

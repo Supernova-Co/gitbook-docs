@@ -1,52 +1,57 @@
-# Position Health
+# Collateral Accounting
 
-Every participant holds a two-field position per market:
+A rates account needs to distinguish available funds, funds backing positions, and amounts reserved for orders.
 
-| Field   | Meaning                                                                 |
-| ------- | ----------------------------------------------------------------------- |
-| `base`  | Collateral posted (stablecoin, WAD-scaled)                              |
-| `quote` | Signed notional — positive = long (borrower), negative = short (lender) |
+## Account concepts
 
-Only **shorts** (`quote < 0`) can become insolvent. Longs receive funding inflows and stay solvent under normal conditions.
+| Concept | Meaning |
+| --- | --- |
+| Available balance | Funds not currently committed to a position or order |
+| Position balance | Funds accounted for within a market position |
+| Signed notional | The size and direction of rate exposure |
+| Order reservation | Funds or exposure committed to a resting order |
 
-***
+In existing notation, `base` records a position balance and `quote` records signed notional. Positive notional denotes long exposure; negative notional denotes short exposure. Those fields alone do not explain available funds when orders are also present.
 
-## Health ratio
+## What changes a position balance?
 
-Debt is the cost to close the short at the current vAMM price (TWAP, not spot):
+Fixed payments at execution, floating accrual, additions or removals of funds, and closing transactions affect the accounting. Order reservations additionally affect what can be committed elsewhere.
 
-$$
-\text{debt} = |Q| \times \frac{\text{vAMM price}}{10^{18}}
-$$
+Accrual describes the economic amount earned or owed over time. Updating a stored balance is a separate accounting step. A balance snapshot must be interpreted together with outstanding accrual and reservations.
 
-$$
-\text{health} = \frac{\text{debt} \times 10^5}{\text{base}} \quad \leftarrow \text{lower is healthier}
-$$
+## Short obligations and health
 
-***
+A short's remaining obligation is valued using the market's risk rules. Health compares that obligation with the funds eligible to support it.
 
-## Two LTV thresholds
+Opening or modifying a position and triggering liquidation are separate checks. Their applicable price, eligible collateral, and threshold should not be treated as interchangeable.
 
-| Check           | LTV                               | Used when                              |
-| --------------- | --------------------------------- | -------------------------------------- |
-| **Liquidation** | `ltvForMarket` (e.g. 75%)         | Triggering a liquidation               |
-| **Safe**        | `ltvForMarket × 90%` (e.g. 67.5%) | After trades, withdrawals, foreclosure |
+## Initial and maintenance collateral
 
-A short is liquidatable at 75% but must clear 67.5% after any action. The 7.5-point buffer is standard maintenance margin.&#x20;
+For a short, the debt value represents the cost assigned to closing its remaining exposure:
 
-***
+```text
+Debt value = absolute notional × price per unit of notional
+LTV = debt value / eligible collateral
+```
 
-## Funding erodes collateral first
+The notional and price must use consistent units. LTV rises when the valued obligation increases or eligible collateral decreases. Higher LTV means less backing relative to the obligation.
 
-Before any solvency check, outstanding funding settles into `base`:
+| Check | Valuation | Eligible collateral |
+| --- | --- | --- |
+| Open or modify a short | The highest of the time-weighted mark, spot price, and applicable price floor | Position balance less funds reserved for orders |
+| Liquidation condition | Time-weighted mark | Position balance after orders are cancelled and accrued payments are accounted for |
 
-$$
-\text{payment} = |Q| \times \frac{\text{accPerNotional}_{\text{now}} - \text{poolDebtAcc}_{\text{entry}}}{10^{18}}
-$$
+The opening check uses a stricter safe LTV than the maintenance threshold. The safe threshold is a fraction of the maintenance threshold, leaving a buffer between opening a position and becoming liquidatable.
 
-| Side            | Effect            |
-| --------------- | ----------------- |
-| Long (`Q > 0`)  | `base += payment` |
-| Short (`Q < 0`) | `base -= payment` |
+A price floor affects the opening or modification requirement near expiry; it is not a floor on the maintenance valuation.
 
-If a short cannot pay, the deficit is written to the vault as bad debt and collateral is zeroed. Without the upwards movement of Implied APR, a persistently high floating rate can make a position liquidatable over settlement accrual.&#x20;
+## Withdrawals
+
+A total balance is not the same as withdrawable funds. Open positions must remain supported, and resting orders can commit funds. Review available balance and position health before withdrawing.
+
+For the user-facing explanation, see [Collateral, Health & Liquidation](../rates-trading/interactive-blocks.md). For shortfalls, see [Liquidation & Loss Allocation](liquidation.md).
+
+<a id="position-health"></a>
+<a id="health-ratio"></a>
+<a id="two-ltv-thresholds"></a>
+<a id="funding-erodes-collateral-first"></a>
