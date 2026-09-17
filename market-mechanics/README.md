@@ -1,13 +1,27 @@
 # Protocol Mechanics
 
-| In this section |
-| --- |
-| [Architecture & Routing](bootstrap-liquidity.md) |
-| [Pricing & Mark Rates](vamm/README.md) |
-| [Swaps](vamm/swaps.md) |
-| [Settlement](vamm/settlement-accrual.md) |
-| [Collateral Accounting](position-health.md) |
-| [Liquidation & Loss Allocation](liquidation.md) |
-| [Vault Mechanics](vault/README.md) |
-| [Vault Guardrails](vault/vault-guardrails.md) |
-| [Market Parameters](key-parameters.md) |
+Explore how execution, accounting, and market backing work beneath the trading interface.
+
+## Execution & pricing
+
+| Topic | What you’ll find |
+| --- | --- |
+| **[Architecture & Routing](bootstrap-liquidity.md)** | How trades move through the order book and vAMM. |
+| **[Pricing & Mark Rates](vamm/README.md)** | How implied rates, execution prices, and risk marks differ. |
+| **[Swaps](vamm/swaps.md)** | How swaps change exposure through the virtual curve. |
+
+## Accounting & risk
+
+| Topic | What you’ll find |
+| --- | --- |
+| **[Settlement](vamm/settlement-accrual.md)** | How fixed and floating obligations are accounted for. |
+| **[Collateral Accounting](position-health.md)** | How balances, reserved funds, and health checks interact. |
+| **[Liquidation & Loss Allocation](liquidation.md)** | How unhealthy shorts and payment shortfalls are handled. |
+
+## Vaults & configuration
+
+| Topic | What you’ll find |
+| --- | --- |
+| **[Vault Mechanics](vault/README.md)** | How vault shares, income, and losses are accounted for. |
+| **[Vault Guardrails](vault/vault-guardrails.md)** | How exposure and capacity constraints protect market backing. |
+| **[Market Parameters](key-parameters.md)** | The configuration categories that govern each market. |
