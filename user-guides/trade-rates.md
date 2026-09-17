@@ -8,9 +8,7 @@ A long pays its full fixed obligation upfront and receives floating payments ove
 
 A short receives fixed upfront and pays floating over time. It must maintain sufficient collateral and can be liquidated if that collateral falls below the market's maintenance requirement.
 
-Changes in the implied rate affect either position's exit value, while floating payments accrue over its holding period.
-
-Read [Long vs Short](../rates-trading/editor.md) before choosing a direction.
+A rise in the implied rate generally improves a long's exit value and worsens a short's. A fall generally has the opposite effect. Floating payments, the remaining term, and fees also affect the position's total PnL.
 
 ## How to use it
 

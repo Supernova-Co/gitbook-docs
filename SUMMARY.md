@@ -21,7 +21,6 @@
 
 ## Trading & Positions
 
-* [Long vs Short](rates-trading/editor.md)
 * [Market Specifications](rates-trading/market-specifications.md)
 * [Orders & Execution](market-mechanics/order-book.md)
 * [Collateral, Health & Liquidation](rates-trading/interactive-blocks.md)

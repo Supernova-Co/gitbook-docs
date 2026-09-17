@@ -95,7 +95,7 @@ In extreme cases, reduced floating receipts can leave part of the borrowing cost
 
 ## Further reading
 
-- [Long Rate](../../rates-trading/editor.md)
+- [Trade Rates](../../user-guides/trade-rates.md)
 - [Open Position](../../rates-trading/images-and-media.md)
 - [Close Position](../../rates-trading/integrations.md)
 - [Settlement Accrual](../../market-mechanics/vamm/settlement-accrual.md)
