@@ -1,0 +1,5 @@
+root: ./
+
+structure:
+  readme: about/about-rates-exchange.md
+  summary: SUMMARY.md
