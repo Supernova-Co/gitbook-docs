@@ -4,7 +4,11 @@ Use Rates Exchange to express a view on the rates traded in its [supported marke
 
 ## How it works
 
-A long pays fixed and receives floating. A short receives fixed and pays floating. Changes in the implied rate affect the position's exit value, while floating payments accrue over its holding period.
+A long pays its full fixed obligation upfront and receives floating payments over the chosen term. **A long rates position cannot be liquidated because its fixed payment is already fully paid.** The floating payments it receives continue to accrue over time; they are not settled upfront.
+
+A short receives fixed upfront and pays floating over time. It must maintain sufficient collateral and can be liquidated if that collateral falls below the market's maintenance requirement.
+
+Changes in the implied rate affect either position's exit value, while floating payments accrue over its holding period.
 
 Read [Long vs Short](../rates-trading/editor.md) before choosing a direction.
 
@@ -37,7 +41,7 @@ Check whether the order filled and review the resulting position. An open order 
 
 ## Managing the position
 
-Monitor the position's size, accrued payments, and remaining term. If you are short, also monitor collateral and health. An unchanged quoted rate does not mean your available collateral is unchanged.
+Monitor the position's size, accrued payments, and remaining term. If you are short, also monitor collateral and health. Floating payments are deducted from your short position's collateral over time, even when the market's quoted fixed rate stays the same.
 
 To exit, review [Closing & Expiry](../rates-trading/integrations.md). Closing a position and withdrawing the resulting available funds are separate actions.
 

@@ -44,6 +44,16 @@ After the deposit completes, confirm the funds appear in your funding account's 
 {% endstep %}
 {% endstepper %}
 
+## Enable One-Click Trading (1CT)
+
+One-Click Trading is required to trade through the Rates Exchange Trading Terminal. Authorize a session in your wallet to submit trading actions without approving each one separately. When the session expires, authorize a new one to continue trading.
+
+1CT is available **only through the Rates Exchange frontend**. API clients cannot use this authorization method.
+
+The session covers **trading actions only**. It does not authorize deposits or withdrawals, which require separate wallet approval.
+
+**Funding and fees still apply.** You need funds in the relevant isolated account to back your positions, plus a sufficient gas balance. 1CT does not remove collateral requirements or trading fees.
+
 ## Withdraw funds
 
 {% stepper %}

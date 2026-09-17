@@ -53,7 +53,7 @@ Review the available rates market, quoted fixed rate, and term, also called its 
 
 <a id="enter-long-rate-position"></a>
 
-Provide the funds required for the Rates Exchange position. Enter the long: pay fixed and receive floating.
+Open the hedge to pay fixed and receive floating. If your funding account and wallet balances on L2 are insufficient, the Hedge flow automatically triggers bridging of the required funds from Ethereum mainnet. Your Aave loan collateral stays on Aave.
 
 Keep track of both the underlying loan and the separate rates position.
 {% endstep %}
@@ -61,9 +61,9 @@ Keep track of both the underlying loan and the separate rates position.
 
 ## Managing the position
 
-### Collateral
+### No Liquidation Risk for Your Rates Exchange Long
 
-Continue managing the collateral and health of your Aave loan. Funds required for the Rates Exchange position are separate from the collateral supporting that loan.
+Your Rates Exchange long position **cannot be liquidated** because its fixed obligation is paid upfront. This does not apply to your underlying Aave loan, which remains subject to liquidation. Continue managing its collateral and health.
 
 ### Repaying the underlying loan
 
@@ -73,7 +73,7 @@ Use Aave’s repayment process for full or partial repayment. Review the hedge w
 
 <a id="manage-or-exit-early-optional"></a>
 
-You can seek to close the Rates Exchange long before expiry. The outcome depends on the exit terms and execution. Any outstanding underlying loan continues at its floating borrowing rate without that hedge.
+You can close your Rates Exchange long **anytime before expiry at the market price**. Closing through the Hedge flow automatically bridges the remaining funds back to your Ethereum mainnet wallet. Your Aave loan remains outstanding at its floating borrowing rate unless you repay it separately.
 
 ### Expiry
 
@@ -84,13 +84,14 @@ The rates position settles at the end of its term. Any unpaid Aave loan remains 
 
 ## Risks and limitations
 
-- **Underlying loan risk:** The hedge does not remove Aave’s collateral requirements or liquidation risk.
+- **No liquidation risk for the long:** Your Rates Exchange long **cannot be liquidated** because its fixed obligation is paid upfront.
+- **Underlying loan risk:** Your Aave loan can still be liquidated. The hedge does not remove its collateral requirements.
 - **Separate hedge risk:** Using Rates Exchange adds a separate position and protocol exposure alongside the loan.
 - **Hedge fit:** The rates market, position size, and term must be considered in relation to your borrowing exposure. Do not assume the hedge covers every borrowing cost.
 - **Costs and exit:** Funding the fixed obligation upfront, fees, and early-exit execution affect the overall cost of the strategy.
 - **Ongoing management:** Repaying or changing the loan does not mean you should leave the hedge unchanged. Review both positions together.
 
-Reduced floating receipts can leave part of the borrowing cost unhedged. See [Risks & Trust Assumptions](../../security/risks-and-trust-assumptions.md).
+In extreme cases, reduced floating receipts can leave part of the borrowing cost unhedged. See [Risks & Trust Assumptions](../../security/risks-and-trust-assumptions.md).
 
 ## Further reading
 
