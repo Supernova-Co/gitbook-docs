@@ -94,6 +94,6 @@ Email [team@rates.exchange](mailto:team@rates.exchange) for help with funding or
 
 - [Borrow at a Fixed Rate](../fixed-rate-borrowing/user-guide-one-click-fixing-rate/borrow-at-fixed-rate-from-aave-morpho.md)
 - [Lend with Yield Boost](../fixed-rate-borrowing/fixed-rate-yield-boost/README.md)
-- [Close Position](../rates-trading/integrations.md)
+- [Closing & Expiry](../rates-trading/payments-and-pnl.md#close-position)
 - [Position Health](../market-mechanics/position-health.md)
 - [Fees](../rates-trading/fee.md)

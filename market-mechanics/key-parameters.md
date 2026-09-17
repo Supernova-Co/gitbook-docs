@@ -13,6 +13,6 @@ Market parameters define the conditions for trading, position health, and vault 
 
 Distinguish an initial requirement from a maintenance condition, and distinguish a market's configured limit from current available liquidity.
 
-See [Market Specifications](../rates-trading/market-specifications.md), [Fees](../rates-trading/fee.md), and [Vault Mechanics](vault/README.md).
+See [Supported Markets](../get-started/supported-markets.md), [Fees](../rates-trading/fee.md), and [Vault Mechanics](vault/README.md).
 
 <a id="key-parameters"></a>

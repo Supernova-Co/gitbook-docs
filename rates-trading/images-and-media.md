@@ -33,4 +33,4 @@ The notional is the size of the rate exposure, not the amount transferred into t
 
 An order becomes a position only when it executes. Resting orders can reserve funds or exposure, so funds committed to an order are not available for every other action.
 
-For the walkthrough, see [Trade Rates](../user-guides/trade-rates.md). For reference, see [Market Specifications](market-specifications.md), [Orders & Execution](../market-mechanics/order-book.md), and [Collateral, Health & Liquidation](interactive-blocks.md).
+For the walkthrough, see [Trade Rates](../user-guides/trade-rates.md). For reference, see [Supported Markets](../get-started/supported-markets.md), [Orders & Execution](../market-mechanics/order-book.md), and [Managing Collateral](interactive-blocks.md).

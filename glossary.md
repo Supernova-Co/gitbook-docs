@@ -55,5 +55,5 @@ A measure of whether a position has sufficient backing under its market's rules.
 ## Further reading
 
 - [Rates Exchange Basics](get-started/basics.md)
-- [Market Specifications](rates-trading/market-specifications.md)
+- [Supported Markets](get-started/supported-markets.md)
 - [Collateral Accounting](market-mechanics/position-health.md)

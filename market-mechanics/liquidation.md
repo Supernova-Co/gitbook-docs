@@ -140,7 +140,7 @@ Permissionless participation does not grant the right to call the restricted for
 
 ## Further reading
 
-- [Collateral, Health & Liquidation](../rates-trading/interactive-blocks.md)
+- [Managing Collateral](../rates-trading/interactive-blocks.md)
 - [Collateral Accounting](position-health.md)
 - [Settlement](vamm/settlement-accrual.md)
 - [Vault Guardrails](vault/vault-guardrails.md)

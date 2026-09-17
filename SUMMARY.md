@@ -21,11 +21,9 @@
 
 ## Trading & Positions
 
-* [Market Specifications](rates-trading/market-specifications.md)
 * [Orders & Execution](market-mechanics/order-book.md)
-* [Collateral, Health & Liquidation](rates-trading/interactive-blocks.md)
-* [Payments & PnL](rates-trading/payments-and-pnl.md)
-* [Closing & Expiry](rates-trading/integrations.md)
+* [Managing Collateral](rates-trading/interactive-blocks.md)
+* [Payments, PnL & Expiry](rates-trading/payments-and-pnl.md)
 * [Fees](rates-trading/fee.md)
 
 ## Protocol Mechanics

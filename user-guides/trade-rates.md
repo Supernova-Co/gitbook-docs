@@ -41,7 +41,7 @@ Check whether the order filled and review the resulting position. An open order 
 
 Monitor the position's size, accrued payments, and remaining term. If you are short, also monitor collateral and health. Floating payments are deducted from your short position's collateral over time, even when the market's quoted fixed rate stays the same.
 
-To exit, review [Closing & Expiry](../rates-trading/integrations.md). Closing a position and withdrawing the resulting available funds are separate actions.
+To exit, review [Closing & Expiry](../rates-trading/payments-and-pnl.md#close-position). Closing a position and withdrawing the resulting available funds are separate actions.
 
 ## Risks and limitations
 
@@ -49,7 +49,7 @@ Liquidity, execution prices, fees, and payment obligations affect the result. Sh
 
 ## Further reading
 
-- [Market Specifications](../rates-trading/market-specifications.md)
-- [Collateral, Health & Liquidation](../rates-trading/interactive-blocks.md)
-- [Payments & PnL](../rates-trading/payments-and-pnl.md)
+- [Supported Markets](../get-started/supported-markets.md)
+- [Managing Collateral](../rates-trading/interactive-blocks.md)
+- [Payments, PnL & Expiry](../rates-trading/payments-and-pnl.md)
 - [Fees](../rates-trading/fee.md)

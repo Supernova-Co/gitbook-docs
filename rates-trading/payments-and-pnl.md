@@ -1,4 +1,4 @@
-# Payments & PnL
+# Payments, PnL & Expiry
 
 A rates position has both a payment history and a value at which it can be closed. Keep those separate when evaluating its result.
 
@@ -24,14 +24,32 @@ Floating payments accumulate over the period the position is open. They increase
 
 Accrued amounts and completed transfers are different concepts. Funds becoming part of a position's accounting does not necessarily make them immediately withdrawable.
 
-## Closing and expiry
+<a id="close-position"></a>
 
-An early close is executed against the remaining rate exposure. Prior floating accrual remains part of the position's economic history and must not be counted twice.
+## Closing early
 
-At expiry, there is no remaining term to trade. Final settlement determines the position's remaining balance and obligations.
+Close a position by trading the opposite direction in the same market. The execution rate can differ from your entry rate. A partial close leaves the remaining exposure open.
+
+After closing, check the filled size, remaining position, and any resting orders. Cancelling an order does not close an existing position.
+
+Floating payments accrued before the close remain part of your PnL. Include them alongside the closing proceeds or costs and fees, counting each component once.
+
+## At expiry
+
+At expiry, there is no remaining term to trade. Final settlement accounts for outstanding payments and determines the position's remaining balance. Check that settlement is complete before withdrawing available funds.
+
+## Continuing a hedge
+
+To continue a hedge, open a position covering the next period. Its rate and execution terms may differ. **Auto-roll is upcoming and is not currently available.**
+
+Closing or settling a Rates Exchange position does not repay your underlying loan or withdraw your lending deposit. Those remain open until you manage them separately.
+
+## Withdrawing afterward
+
+Closing or settling a position and withdrawing funds are separate steps. Follow [Fund & Withdraw](../get-started/fund-and-withdraw.md) to transfer available funds out of your account.
 
 ## Reading the result
 
 Review entry payments, accrued floating payments, closing proceeds or costs, and fees together. Distinguish the result of the rates position from the result of an underlying loan, lending deposit, or vault investment.
 
-See [Settlement](../market-mechanics/vamm/settlement-accrual.md), [Closing & Expiry](integrations.md), and [Fees](fee.md).
+See [Settlement](../market-mechanics/vamm/settlement-accrual.md) and [Fees](fee.md).

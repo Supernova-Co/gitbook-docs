@@ -49,7 +49,7 @@ A price floor affects the opening or modification requirement near expiry; it is
 
 A total balance is not the same as withdrawable funds. Open positions must remain supported, and resting orders can commit funds. Review available balance and position health before withdrawing.
 
-For the user-facing explanation, see [Collateral, Health & Liquidation](../rates-trading/interactive-blocks.md). For shortfalls, see [Liquidation & Loss Allocation](liquidation.md).
+For the user-facing explanation, see [Managing Collateral](../rates-trading/interactive-blocks.md). For shortfalls, see [Liquidation & Loss Allocation](liquidation.md).
 
 <a id="position-health"></a>
 <a id="health-ratio"></a>

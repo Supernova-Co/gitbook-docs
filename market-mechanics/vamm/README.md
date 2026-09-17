@@ -31,7 +31,7 @@ A time-weighted average reflects prices over a window. It can differ from the cu
 
 A small remaining cash value can correspond to a substantial change when expressed as an annualized rate. Review both remaining term and executable size rather than judging liquidity from an APR alone.
 
-See [Swaps](swaps.md), [Market Specifications](../../rates-trading/market-specifications.md), and [Collateral Accounting](../position-health.md).
+See [Swaps](swaps.md), [Supported Markets](../../get-started/supported-markets.md), and [Collateral Accounting](../position-health.md).
 
 <a id="vamm"></a>
 <a id="core-design"></a>

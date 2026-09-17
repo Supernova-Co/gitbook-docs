@@ -28,10 +28,6 @@ Swaps, deposits, and withdrawals typically use about **$0.01 per action** from t
 
 If the balance falls below the minimum, these flows can automatically top it up using the same collateral token from your funding account and, if needed, your wallet.
 
-## Comparing a quote with a result
-
-Check the notional, remaining term, fixed payment, floating accrual, execution costs, and exit outcome. For a hedge, include the underlying lending or borrowing result as well.
-
-A rate move measured in basis points cannot be compared directly with a cash fee without accounting for the size and duration of the exposure. See [Payments & PnL](payments-and-pnl.md).
+See [Payments, PnL & Expiry](payments-and-pnl.md) to understand how fees affect your position’s result.
 
 <a id="fee"></a>

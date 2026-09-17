@@ -77,7 +77,7 @@ Review the hedge whenever you reduce or withdraw the deposit.
 
 Closing the short ends the hedge. If you keep your Aave deposit, it continues earning variable lending yield.
 
-Your closing outcome depends on the available execution rate and applicable fees. See [Close Position](../../rates-trading/integrations.md) before exiting.
+Your closing outcome depends on the available execution rate and applicable fees. See [Closing & Expiry](../../rates-trading/payments-and-pnl.md#close-position) before exiting.
 
 ### Expiry
 
@@ -97,7 +97,7 @@ The short settles at the end of its chosen term. Your Aave lending deposit remai
 
 - [Fund & Withdraw](../../get-started/fund-and-withdraw.md)
 - [Short Rate](../../rates-trading/markdown.md)
-- [Close Position](../../rates-trading/integrations.md)
+- [Closing & Expiry](../../rates-trading/payments-and-pnl.md#close-position)
 - [Position Health](../../market-mechanics/position-health.md)
 - [Liquidation & Loss Allocation](../../market-mechanics/liquidation.md)
 - [Fees](../../rates-trading/fee.md)

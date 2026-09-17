@@ -18,7 +18,7 @@ See [Orders & Execution](../market-mechanics/order-book.md).
 
 Review open positions and orders that may commit funds. Check whether the balance belongs to your trading account, a rates position, a vault, or an underlying lending deposit. These are different withdrawal contexts.
 
-See [Collateral, Health & Liquidation](../rates-trading/interactive-blocks.md) and [Vault Mechanics](../market-mechanics/vault/README.md).
+See [Managing Collateral](../rates-trading/interactive-blocks.md) and [Vault Mechanics](../market-mechanics/vault/README.md).
 
 ## Position health changed without a large rate move
 
@@ -30,7 +30,7 @@ Review both the price used for health checks and the payments accrued by the pos
 
 A quoted annualized rate is not a complete statement of cash profit. Review the notional, remaining term, floating payments, closing value, and costs. For a hedge, include the underlying loan or deposit.
 
-See [Payments & PnL](../rates-trading/payments-and-pnl.md).
+See [Payments, PnL & Expiry](../rates-trading/payments-and-pnl.md).
 
 ## The underlying loan or deposit changed
 
