@@ -21,30 +21,28 @@ layout:
 
 # Managing Collateral
 
-A short receives fixed upfront and pays floating over time. Keep enough collateral in its isolated market account to support those obligations. Funds in your wallet, funding account, or another market do not back the short.
+Short positions require collateral in their isolated market account. Long positions pay fixed upfront and cannot be liquidated.
 
-## Monitor position health
+## What changes a short’s health?
 
-- **Floating payments:** Accrued payments reduce the short's collateral over time.
-- **Rate changes:** A higher implied rate can increase the cost of closing the short and weaken its health.
-- **Open orders:** Reserved funds affect the amount available for trading or withdrawal.
-
-Health can deteriorate even when the quoted fixed rate is unchanged. Monitor accrued payments as well as the displayed balance.
-
-## Add collateral or reduce exposure
-
-Add collateral to the relevant isolated account to increase the funds backing the short. Alternatively, close part or all of the position to reduce its remaining exposure. Closing depends on available execution and incurs applicable fees.
-
-Opening or modifying a short requires a buffer above the liquidation condition. Use the market's opening requirement when sizing a position. See [Collateral Accounting](../market-mechanics/position-health.md) for the valuation and health checks.
-
-## Withdraw available collateral
-
-Check the available amount and the short's resulting health before withdrawing. Funds reserved for orders or needed to support the position are not freely withdrawable. See [Fund & Withdraw](../get-started/fund-and-withdraw.md).
+- **Floating payments** reduce collateral over time, even if the quoted fixed rate stays unchanged.
+- **A higher implied rate** can increase the short’s valued obligation and push it closer to liquidation.
+- **Open orders** reserve funds, reducing the collateral available to support additional trades.
 
 <a id="liquidation-threshold"></a>
 
-## If health falls below the requirement
+## Opening and liquidation thresholds
 
-An eligible short may be taken over through foreclosure or closed through liquidation. Act before it reaches that condition by adding collateral or reducing exposure. See [Liquidation & Loss Allocation](../market-mechanics/liquidation.md) for eligibility, caller permissions, and loss allocation.
+Opening or modifying a short requires a stricter health threshold than maintaining an existing position. A short can therefore avoid liquidation but still lack enough collateral to increase exposure or withdraw funds.
 
-A long rates position cannot be liquidated because its fixed obligation is paid upfront. It still carries market and payment-shortfall risk. Any underlying loan has its own collateral and liquidation requirements.
+Health checks use the market’s risk valuation, which can differ from the current execution price. See [Collateral Accounting](../market-mechanics/position-health.md) for the calculation.
+
+## Adding or withdrawing collateral
+
+Adding collateral improves the short’s health. Excess collateral can be withdrawn only if the remaining position passes the required health check.
+
+**An open position does not lock the entire balance. Open orders, however, block withdrawals of any amount, including unreserved funds. Cancel all open orders before withdrawing.**
+
+See [Orders & Execution](../market-mechanics/order-book.md#collateral-for-orders-and-positions) for reservation rules.
+
+If the short breaches its maintenance requirement, it becomes eligible for [foreclosure or liquidation](../market-mechanics/liquidation.md).
