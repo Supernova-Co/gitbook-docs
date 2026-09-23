@@ -1,6 +1,6 @@
 # Collateral Accounting
 
-A rates account needs to distinguish available funds, funds backing positions, and amounts reserved for orders.
+A rates account tracks available funds, position balances, and order reservations.
 
 ## Account concepts
 
@@ -11,19 +11,19 @@ A rates account needs to distinguish available funds, funds backing positions, a
 | Signed notional | The size and direction of rate exposure |
 | Order reservation | Funds or exposure committed to a resting order |
 
-In existing notation, `base` records a position balance and `quote` records signed notional. Positive notional denotes long exposure; negative notional denotes short exposure. Those fields alone do not explain available funds when orders are also present.
+In existing notation, `base` records a position balance and `quote` records signed notional. Positive notional denotes long exposure; negative notional denotes short exposure. Order reservations reduce available collateral or exposure.
 
 ## What changes a position balance?
 
 Fixed payments at execution, floating accrual, additions or removals of funds, and closing transactions affect the accounting. Order reservations additionally affect what can be committed elsewhere.
 
-Accrual describes the economic amount earned or owed over time. Updating a stored balance is a separate accounting step. A balance snapshot must be interpreted together with outstanding accrual and reservations.
+Accrual describes the economic amount earned or owed over time. Updating a stored balance is a separate accounting step. Health checks account for outstanding accrual and order reservations.
 
 ## Short obligations and health
 
 A short's remaining obligation is valued using the market's risk rules. Health compares that obligation with the funds eligible to support it.
 
-Opening or modifying a position and triggering liquidation are separate checks. Their applicable price, eligible collateral, and threshold should not be treated as interchangeable.
+Opening, modification, and liquidation checks use the valuations and collateral definitions below.
 
 ## Initial and maintenance collateral
 
@@ -47,7 +47,7 @@ A price floor affects the opening or modification requirement near expiry; it is
 
 ## Withdrawals
 
-A total balance is not the same as withdrawable funds. Open positions must remain supported, and resting orders can commit funds. Review available balance and position health before withdrawing.
+Collateral withdrawals must leave open positions within the required health limits. Open orders block withdrawals until cancelled.
 
 For the user-facing explanation, see [Managing Collateral](../rates-trading/interactive-blocks.md). For shortfalls, see [Liquidation & Loss Allocation](liquidation.md).
 

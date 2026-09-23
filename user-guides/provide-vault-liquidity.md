@@ -5,7 +5,7 @@ Rates Exchange vaults provide liquidity for rates trading through the vAMM. Depo
 - **How it works:** The vault takes the other side of vAMM trades and provides backing for liquidations.
 - **PnL:** Trading fees, funding income, position gains or losses, and liquidation shortfalls contribute to the vault’s PnL.
 - **Share value:** Your shares represent a portion of the vault’s capital and accumulated PnL. Profits increase their value; losses reduce it.
-- **Withdrawal delay:** After requesting a withdrawal, wait for the required period before redeeming your shares.
+- **Withdrawal delay:** After requesting a withdrawal, wait **15 minutes** before redeeming your shares. This delay applies both before and after maturity.
 - **Withdrawal limits:** Exposure limits can restrict withdrawals to keep enough capital backing open positions.
 - **Early-withdrawal fee:** Withdrawing before maturity incurs a fee of **1% of net**. The fee stays in the vault, benefiting the remaining depositors.
 

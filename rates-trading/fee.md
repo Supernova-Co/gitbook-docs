@@ -29,9 +29,9 @@ If you partially close the position, subsequent fees accrue on the remaining ope
 
 ## Vault early-withdrawal fee
 
-Withdrawing before maturity incurs a fee of **1% of net**. The fee stays in the vault, benefiting the remaining depositors. It does not go to the protocol’s fee wallet.
+Withdrawing before maturity incurs a fee of **1% of net**. The fee stays in the vault, benefiting the remaining depositors. It does not go towards protocol fees.
 
-Withdrawals also remain subject to the vault’s withdrawal delay and exposure limits.
+Vault withdrawals have a **15-minute delay** from the withdrawal request, both before and after maturity. Exposure limits can also restrict withdrawals.
 
 <a id="gas-balances"></a>
 

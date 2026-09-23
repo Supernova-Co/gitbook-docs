@@ -30,7 +30,7 @@ Review both the price used for health checks and the payments accrued by the pos
 
 A quoted annualized rate is not a complete statement of cash profit. Review the notional, remaining term, floating payments, closing value, and costs. For a hedge, include the underlying loan or deposit.
 
-See [Understanding PnL](../rates-trading/payments-and-pnl.md).
+See [PnL](../rates-trading/payments-and-pnl.md).
 
 ## The underlying loan or deposit changed
 

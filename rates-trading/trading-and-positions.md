@@ -6,5 +6,5 @@ From placing an order to settling a position: the essentials for trading on Rate
 | --- | --- |
 | **[Orders & Execution](../market-mechanics/order-book.md)** | Understand order types, fills, and cancellations. |
 | **[Managing Collateral](interactive-blocks.md)** | Monitor short-position health and manage collateral. |
-| **[Understanding PnL](payments-and-pnl.md)** | Track payments, close positions, and prepare for expiry. |
+| **[PnL](payments-and-pnl.md)** | Track payments, close positions, and prepare for expiry. |
 | **[Fees](fee.md)** | Understand execution, settlement, and gas costs. |

@@ -1,4 +1,4 @@
-# Understanding PnL
+# PnL
 
 Your rates position has two sources of PnL: **settlement PnL** from floating-rate payments and **position PnL** from changes in the value of your remaining exposure.
 

@@ -13,15 +13,12 @@ Rates Exchange separates the account holding funds, the execution venues, the ma
 | Vault | Acts as counterparty to vAMM flow and participates in market loss absorption |
 | Rate data and settlement | Supplies the underlying-rate information used to account for floating payments |
 
-## An order's path
+## Order routing
 
-An order is evaluated against available order-book and vAMM liquidity. Execution may involve more than one venue. The resulting exposure and balance changes belong to the same rates market.
+Orders route to the order book, the vAMM, or both, depending on available liquidity. Fills update the trader’s position and balance within the same rates market.
 
-Order-book counterparties and the vault are different sources of liquidity. The vault does not need to be the counterparty to a trade matched entirely between users.
-
-## Constraints matter
-
-A pricing curve is not a guarantee that every trade size can execute. Available liquidity, collateral requirements, and market constraints affect execution. A quote, an accepted order, and a completed fill should be distinguished.
+- **Order-book fills:** Match against resting user orders.
+- **vAMM fills:** Execute against the virtual pricing curve, with the vault taking the opposite exposure.
 
 ## Related mechanics
 

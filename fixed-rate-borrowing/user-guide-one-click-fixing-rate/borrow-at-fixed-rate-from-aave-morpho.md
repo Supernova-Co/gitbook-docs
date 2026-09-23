@@ -45,5 +45,5 @@ Your effective borrowing cost depends on the hedge’s size and term, fees, and 
 ## Further reading
 
 - [Fund & Withdraw](../../get-started/fund-and-withdraw.md)
-- [Understanding PnL](../../rates-trading/payments-and-pnl.md)
+- [PnL](../../rates-trading/payments-and-pnl.md)
 - [Fees](../../rates-trading/fee.md)

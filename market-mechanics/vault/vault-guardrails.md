@@ -1,24 +1,26 @@
 # Vault Guardrails
 
-Vault guardrails constrain market activity when exposure or losses become too large relative to the vault's backing. They reduce some risks but cannot guarantee principal or prevent every loss.
+Vault guardrails limit exposure relative to the capital backing the market.
 
 ## Exposure and capacity
 
-A new trade can change the vault's obligations. A withdrawal can reduce the capital available to support existing exposure. Both need to be understood in relation to the vault's condition.
+New trades change the vault’s obligations; withdrawals reduce the capital backing them. Exposure checks can restrict either action when the resulting exposure exceeds the configured limit.
 
-A constraint on accepting new risk is not the same as closing existing exposure or resolving a loss that has already occurred.
+Blocking new exposure leaves existing positions in place. Liquidation and recovery mechanisms handle distressed positions and shortfalls separately.
 
 ## Trading and withdrawals
 
-Market execution can depend on which venues remain available and which actions satisfy their constraints. A quoted virtual curve does not guarantee unlimited execution or uninterrupted withdrawals.
+Execution depends on available venue capacity. A withdrawal can be blocked when removing capital would leave insufficient backing for open positions.
 
-Review the current vault terms before committing funds or requesting redemption.
+Vault redemptions also require a **15-minute delay**, both before and after maturity. See [Vault Mechanics](README.md) for redemption terms.
 
-## Shortfalls and share value
+## Shortfalls and recovery
 
-Market losses can reduce the assets backing shares. If floating obligations cannot be met in full, participant receipts can also be affected. Guardrails should not be interpreted as a guarantee of a minimum share price or full payment in every scenario.
+- **Vault losses:** Losses absorbed by the vault reduce NAV and share value.
+- **Funding shortfalls:** The funding factor `φ` scales the vault-funded portion of long payments when backing is insufficient.
+- **Matched recovery:** Entry into recovery disables the vAMM and restricts vault deposits. Before maturity, unmatched long exposure is trimmed pro rata to leave a matched book.
 
-See [Vault Mechanics](README.md) and [Liquidation & Loss Allocation](../liquidation.md).
+See [Liquidation & Loss Allocation](../liquidation.md) for the triggers and allocation rules.
 
 <a id="exposure-cap"></a>
 <a id="phi-φ--partial-funding"></a>
