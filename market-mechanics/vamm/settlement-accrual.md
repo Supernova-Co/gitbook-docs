@@ -26,6 +26,6 @@ For hedgers, this settlement does not settle the separate Aave loan or deposit.
 
 Settlement depends on the ability of the market to meet its obligations. A shortfall can affect collateral, vault value, and amounts received by participants. See [Liquidation & Loss Allocation](../liquidation.md).
 
-For the trader's view, see [Payments, PnL & Expiry](../../rates-trading/payments-and-pnl.md).
+For the trader's view, see [Understanding PnL](../../rates-trading/payments-and-pnl.md).
 
 <a id="settlement-accrual"></a>

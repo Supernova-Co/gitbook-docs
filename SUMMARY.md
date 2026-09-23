@@ -19,7 +19,7 @@
 * [Trading & Positions](rates-trading/trading-and-positions.md)
   * [Orders & Execution](market-mechanics/order-book.md)
   * [Managing Collateral](rates-trading/interactive-blocks.md)
-  * [Payments, PnL & Expiry](rates-trading/payments-and-pnl.md)
+  * [Understanding PnL](rates-trading/payments-and-pnl.md)
   * [Fees](rates-trading/fee.md)
 
 * [Protocol Mechanics](market-mechanics/protocol-mechanics.md)

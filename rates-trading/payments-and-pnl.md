@@ -1,55 +1,65 @@
-# Payments, PnL & Expiry
+# Understanding PnL
 
-A rates position has both a payment history and a value at which it can be closed. Keep those separate when evaluating its result.
+Your rates position has two sources of PnL: **settlement PnL** from floating-rate payments and **position PnL** from changes in the value of your remaining exposure.
 
-## Three parts of the result
+## Settlement PnL
 
-| Component | What it represents |
-| --- | --- |
-| Fixed payment | The fixed obligation paid by the long and received by the short at entry |
-| Floating payments | The underlying-rate accrual received by the long and owed by the short during the holding period |
-| Closing value and costs | The value realized when reducing or closing the remaining exposure, together with applicable charges |
+Floating payments settle block by block, updating your position balance:
 
-For a hedge, also include the interest paid on the underlying loan or earned on the lending deposit. The Rates Exchange position alone does not show the result of the combined strategy.
+- **Long:** Receives floating payments.
+- **Short:** Pays floating payments.
 
-## Implied-rate changes
+The amount depends on the underlying borrow rate, your position size, and the time held. Payments continue even when the market’s quoted fixed rate stays unchanged. They update your position balance rather than transferring to your wallet.
 
-An open long generally benefits in exit value from a rise in the implied rate; an open short generally benefits from a fall. This describes the value of the remaining exposure, not a guaranteed total profit.
+## Position PnL
 
-The time left until expiry matters. Comparing two quoted rates without accounting for remaining term does not establish a cash profit or loss.
+The market’s implied fixed rate affects the value of your remaining position:
 
-## Floating accrual
+- **Long:** A rise in the implied fixed rate increases your position’s value; a fall decreases it.
+- **Short:** A fall in the implied fixed rate increases your position’s value; a rise decreases it.
 
-Floating payments accumulate over the period the position is open. They increase a long's balance and reduce a short's balance as they are accounted for.
+These describe rate changes with remaining time held constant. As expiry approaches, the remaining term also affects position value.
 
-Accrued amounts and completed transfers are different concepts. Funds becoming part of a position's accounting does not necessarily make them immediately withdrawable.
+**At entry, a long pays fixed and a short receives fixed upfront.** This payment establishes the position’s entry value. Receiving fixed upfront is not immediate profit: the short still owes floating payments and has an open position to settle or close.
+
+## Realized and unrealized PnL
+
+Settlement and position PnL describe **where PnL comes from**. Realized and unrealized PnL distinguish gains and losses already accounted for from the changing value of open exposure.
+
+- **Realized PnL:** Gains or losses already accounted for through floating-rate settlement or by closing exposure.
+- **Unrealized PnL:** The estimated gain or loss on exposure you still hold, based on its current valuation.
+
+Closing exposure realizes its position PnL. A partial close realizes only the portion closed. Realized position PnL depends on the execution price, which may differ from the mark used to display unrealized PnL.
+
+Realized PnL does not necessarily mean withdrawable funds. Collateral requirements and open orders can still restrict withdrawals.
 
 <a id="close-position"></a>
 
-## Closing early
+## Closing and expiry
 
-Close a position by trading the opposite direction in the same market. The execution rate can differ from your entry rate. A partial close leaves the remaining exposure open.
+**Closing early:** Trade in the opposite direction to reduce or close your position. Floating payments settled while you held it remain part of your PnL, alongside entry and exit cash flows.
 
-After closing, check the filled size, remaining position, and any resting orders. Cancelling an order does not close an existing position.
+<a id="at-expiry"></a>
 
-Floating payments accrued before the close remain part of your PnL. Include them alongside the closing proceeds or costs and fees, counting each component once.
+**At expiry:** Floating accrual ends at maturity. Final settlement accounts for outstanding obligations and determines the remaining balance.
 
-## At expiry
+**Continuing exposure:** Open a position covering the next term. **Auto-roll is upcoming and is not currently available.**
 
-At expiry, there is no remaining term to trade. Final settlement accounts for outstanding payments and determines the position's remaining balance. Check that settlement is complete before withdrawing available funds.
+## Total PnL
 
-## Continuing a hedge
+For a fully closed position, before fees:
 
-To continue a hedge, open a position covering the next period. Its rate and execution terms may differ. **Auto-roll is upcoming and is not currently available.**
+| Direction | PnL calculation |
+| --- | --- |
+| **Long** | Floating payments received + payment received when closing − fixed payment paid at entry |
+| **Short** | Fixed payment received at entry − floating payments paid − payment paid when closing |
 
-Closing or settling a Rates Exchange position does not repay your underlying loan or withdraw your lending deposit. Those remain open until you manage them separately.
+Deduct applicable fees that are not already included in those amounts.
 
-## Withdrawing afterward
+At expiry, the remaining exposure has no closing value. PnL comes from the difference between the upfront fixed payment and floating payments over the term, less fees.
 
-Closing or settling a position and withdrawing funds are separate steps. Follow [Fund & Withdraw](../get-started/fund-and-withdraw.md) to transfer available funds out of your account.
+## Further reading
 
-## Reading the result
-
-Review entry payments, accrued floating payments, closing proceeds or costs, and fees together. Distinguish the result of the rates position from the result of an underlying loan, lending deposit, or vault investment.
-
-See [Settlement](../market-mechanics/vamm/settlement-accrual.md) and [Fees](fee.md).
+- [Managing Collateral](interactive-blocks.md)
+- [Fees](fee.md)
+- [Fund & Withdraw](../get-started/fund-and-withdraw.md)

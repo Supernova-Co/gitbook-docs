@@ -1,33 +1,46 @@
 # Fees
 
-Review the costs of entering, holding, and exiting a position together. The quoted implied rate is not a complete statement of the total cost or return.
+| Fee | Rate |
+| --- | --- |
+| Trading fee | 1 bp |
+| Open interest (OI) fee | 15 bps annualized |
+| Vault early-withdrawal fee | 1% of net |
+| Gas fee | Typically $0.01 per action |
 
-## Trading costs
+## Trading fee
 
-vAMM swaps carry an execution fee when opening or closing a position, including execution used to unwind a liquidation. The fee is distinct from price impact. An early entry and exit involve separate executions.
+The trading fee is **1 bp**. It is separate from price impact, OI fees, and gas costs.
 
-A share of vAMM swap fees supports the vault. Do not assume the entire fee is paid to LPs or that every execution venue has the same fee treatment.
+## Open interest fee
 
-## Settlement costs
+The OI fee is **15 bps annualized**, accruing block by block while your position remains open. It is calculated on your **open notional**, not your collateral balance.
 
-The settlement fee is applied as a spread around the underlying floating rate: shorts pay the floating rate plus the funding fee, while longs receive the floating rate less the funding fee.
+```text
+OI fee = Open notional × 0.0015 × Holding period in years
+```
 
-This spread is separate from the fixed payment exchanged at entry and from the fee for executing a trade. On matched exposure, both sides of the spread contribute to the vault’s fee income.
+**Example:** For a position with **$100,000 in notional** held for 30 days, using a 365-day year:
 
-## Other actions
+```text
+$100,000 × 0.0015 × 30 / 365 = $12.33
+```
 
-Liquidation charges are separate from ordinary execution charges. A vault redemption before maturity can also incur an early-withdrawal fee retained by the vault. Review the terms for the specific action rather than applying one trade example to every action.
+If you partially close the position, subsequent fees accrue on the remaining open notional.
 
-Account-transfer costs are separate from these market and vault charges.
+## Vault early-withdrawal fee
 
-## Gas balances
+Withdrawing before maturity incurs a fee of **1% of net**. The fee stays in the vault, benefiting the remaining depositors. It does not go to the protocol’s fee wallet.
 
-Rates Exchange handles L2 gas through a pre-funded balance, so you do not pay network gas directly from your wallet for each action. Each collateral token has its own gas balance: USDC markets use USDC, and USDT markets use USDT.
+Withdrawals also remain subject to the vault’s withdrawal delay and exposure limits.
 
-Swaps, deposits, and withdrawals typically use about **$0.01 per action** from this balance. These gas costs are separate from trading and other fees.
+<a id="gas-balances"></a>
 
-If the balance falls below the minimum, these flows can automatically top it up using the same collateral token from your funding account and, if needed, your wallet.
+## Gas fee
 
-See [Payments, PnL & Expiry](payments-and-pnl.md) to understand how fees affect your position’s result.
+Swaps, deposits, and withdrawals typically cost about **$0.01 per action**, separate from trading and OI fees.
+
+Gas is paid from a separate, pre-funded balance in the market’s collateral token: **USDC for USDC markets and USDT for USDT markets**.
+
+When the gas balance falls below the minimum, supported flows can automatically top it up from your funding account and, if needed, your wallet.
 
 <a id="fee"></a>

@@ -51,5 +51,5 @@ Liquidity, execution prices, fees, and payment obligations affect the result. Sh
 
 - [Supported Markets](../get-started/supported-markets.md)
 - [Managing Collateral](../rates-trading/interactive-blocks.md)
-- [Payments, PnL & Expiry](../rates-trading/payments-and-pnl.md)
+- [Understanding PnL](../rates-trading/payments-and-pnl.md)
 - [Fees](../rates-trading/fee.md)

@@ -42,5 +42,5 @@ The filled short receives fixed upfront and pays the floating borrow rate over i
 
 - [Fund & Withdraw](../../get-started/fund-and-withdraw.md)
 - [Managing Collateral](../../rates-trading/interactive-blocks.md)
-- [Payments, PnL & Expiry](../../rates-trading/payments-and-pnl.md)
+- [Understanding PnL](../../rates-trading/payments-and-pnl.md)
 - [Fees](../../rates-trading/fee.md)
