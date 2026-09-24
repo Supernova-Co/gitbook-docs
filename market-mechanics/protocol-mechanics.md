@@ -8,7 +8,6 @@ Explore how execution, accounting, and market backing work beneath the trading i
 | --- | --- |
 | **[Architecture & Routing](bootstrap-liquidity.md)** | How trades move through the order book and vAMM. |
 | **[Implied Rate & Mark Rate](vamm/README.md)** | How implied rates, execution prices, and risk marks differ. |
-| **[Swaps](vamm/swaps.md)** | How swaps change exposure through the virtual curve. |
 
 ## Accounting & risk
 

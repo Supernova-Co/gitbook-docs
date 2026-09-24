@@ -20,6 +20,27 @@ Orders route to the order book, the vAMM, or both, depending on available liquid
 - **Order-book fills:** Match against resting user orders.
 - **vAMM fills:** Execute against the virtual pricing curve, with the vault taking the opposite exposure.
 
+## vAMM pricing
+
+The vAMM uses a constant-product curve of virtual reserves:
+
+```text
+k = baseReserve × quoteReserve
+Price = baseReserve / quoteReserve
+```
+
+Trades change the reserve ratio and marginal quote. Price impact depends on trade size and virtual curve depth.
+
+At an unchanged implied APR, the fixed payment for the remaining term decreases as expiry approaches:
+
+```text
+Price = Implied APR × Remaining duration in days / 365
+```
+
+Between trades, `decayFixed` adjusts the reserves while preserving the constant product and implied APR. At expiry, the remaining-term value reaches zero. This time decay changes the fixed-payment value without changing the annualized rate.
+
+See [Implied Rate & Mark Rate](vamm/README.md) for APR conversion and risk valuation.
+
 ## Related mechanics
 
 - [Orders & Execution](order-book.md)

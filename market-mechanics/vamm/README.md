@@ -92,7 +92,7 @@ See [Collateral Accounting](../position-health.md#floor-margin) for margin requi
 
 - [Collateral Accounting](../position-health.md)
 - [Liquidation & Loss Allocation](../liquidation.md)
-- [Swaps: Time decay](swaps.md#time-decay)
+- [vAMM pricing](../bootstrap-liquidity.md#vamm-pricing)
 - [Settlement](settlement-accrual.md)
 - [PnL](../../rates-trading/payments-and-pnl.md)
 
