@@ -30,22 +30,32 @@ At that price, $100,000 in notional represents a $1,250 fixed payment before fee
 
 ## Mark rate
 
-The mark rate is a time-weighted average of implied APR observations from AMM trades. Each observation is weighted by how long that rate prevailed within the configured window:
+The mark rate is a **15-minute time-weighted average** of implied APR observations from AMM trades. Each observation is weighted by how long that rate prevailed within the configured window:
 
 ```text
 Mark APR = Sum(Implied APR × Duration) / Total duration
 Mark price = Mark APR × Time to maturity in years
 ```
 
-**Example:** If implied APR is 4% for 20 minutes and 7% for 10 minutes within an illustrative 30-minute window:
+**Example:** If implied APR is 4% for 10 minutes and 7% for 5 minutes within the 15-minute window:
 
 ```text
-Mark APR = (4% × 20 + 7% × 10) / 30 = 5%
+Mark APR = (4% × 10 + 7% × 5) / 15 = 5%
 ```
 
-The window is set per market through `minPriceWindow`. The example illustrates the calculation, not the deployed window length.
+The window is configured per market through `minPriceWindow`; the current setting is **15 minutes**.
 
 **Used for risk valuation:** The mark price values the short’s remaining obligation. Time weighting smooths brief changes in the live quote; execution still uses current venue prices.
+
+## Price deviation cap
+
+The current cap is **200 bps**, measured as an absolute difference of **2 percentage points** between spot implied APR and mark APR.
+
+After each routed trade, the protocol checks the spot-to-mark deviation. A trade reverts if it increases the deviation beyond the cap. Trades that reduce the deviation pass this check, including when the remaining deviation is still above the cap; other execution and collateral checks still apply.
+
+**Example:** With a mark APR of 5%, the 200 bps band runs from 3% to 7%. A trade that moves spot APR from 6% to 7.1% reverts. A trade that reduces spot APR from 7.5% to 7.2% passes the deviation check.
+
+The cap is configured per market through `maxTwapDivergenceAprWad`.
 
 ## Collateral and liquidation checks
 
