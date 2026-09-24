@@ -13,17 +13,7 @@ A rates account tracks available funds, position balances, and order reservation
 
 In existing notation, `base` records a position balance and `quote` records signed notional. Positive notional denotes long exposure; negative notional denotes short exposure. Order reservations reduce available collateral or exposure.
 
-## What changes a position balance?
-
-Fixed payments at execution, floating accrual, additions or removals of funds, and closing transactions affect the accounting. Order reservations additionally affect what can be committed elsewhere.
-
-Accrual describes the economic amount earned or owed over time. Updating a stored balance is a separate accounting step. Health checks account for outstanding accrual and order reservations.
-
-## Short obligations and health
-
-A short's remaining obligation is valued using the market's risk rules. Health compares that obligation with the funds eligible to support it.
-
-Opening, modification, and liquidation checks use the valuations and collateral definitions below.
+Position balances change through trade cash flows, floating settlement, and collateral transfers. See [PnL](../rates-trading/payments-and-pnl.md) for cash flows and [Settlement](vamm/settlement-accrual.md) for accrual accounting.
 
 ## Initial and maintenance collateral
 
@@ -39,19 +29,17 @@ The notional and price must use consistent units. LTV rises when the valued obli
 | Check | Valuation | Eligible collateral |
 | --- | --- | --- |
 | Open or modify a short | The highest of the time-weighted mark, spot price, and applicable price floor | Position balance less funds reserved for orders |
-| Liquidation condition | Time-weighted mark | Position balance after orders are cancelled and accrued payments are accounted for |
+| Liquidation condition | Time-weighted mark in normal mode; forward mark in matched recovery | Position balance after orders are cancelled and accrued payments are accounted for |
 
 The opening check uses a stricter safe LTV than the maintenance threshold. The safe threshold is a fraction of the maintenance threshold, leaving a buffer between opening a position and becoming liquidatable.
 
 ### Floor margin
 
-**Floor margin:** A minimum margin requirement ensures that positions opened in the final **5 days before maturity cannot be liquidated**. The floor applies to opening and modification checks; it does not raise the liquidation threshold.
+A minimum margin requirement ensures that positions opened in the final **5 days before maturity cannot be liquidated**. The floor applies to opening and modification checks; it does not raise the liquidation threshold.
 
 ## Withdrawals
 
-Collateral withdrawals must leave open positions within the required health limits. Open orders block withdrawals until cancelled.
-
-For the user-facing explanation, see [Managing Collateral](../rates-trading/interactive-blocks.md). For shortfalls, see [Liquidation & Loss Allocation](liquidation.md).
+See [Managing Collateral](../rates-trading/interactive-blocks.md#adding-or-withdrawing-collateral) for withdrawal health checks and [Orders & Execution](order-book.md#withdrawals) for open-order restrictions.
 
 <a id="position-health"></a>
 <a id="health-ratio"></a>

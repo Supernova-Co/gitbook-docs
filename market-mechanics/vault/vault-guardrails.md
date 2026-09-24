@@ -8,19 +8,13 @@ New trades change the vault’s obligations; withdrawals reduce the capital back
 
 Blocking new exposure leaves existing positions in place. Liquidation and recovery mechanisms handle distressed positions and shortfalls separately.
 
-## Trading and withdrawals
+## Withdrawal capacity
 
-Execution depends on available venue capacity. A withdrawal can be blocked when removing capital would leave insufficient backing for open positions.
+A withdrawal is blocked if the remaining backing would breach the exposure limit. This capacity check is separate from the [withdrawal delay and fee](../../user-guides/provide-vault-liquidity.md).
 
-Vault redemptions also require a **15-minute delay**, both before and after maturity. See [Vault Mechanics](README.md) for redemption terms.
+## Loss allocation and recovery
 
-## Shortfalls and recovery
-
-- **Vault losses:** Losses absorbed by the vault reduce NAV and share value.
-- **Funding shortfalls:** The funding factor `φ` scales the vault-funded portion of long payments when backing is insufficient.
-- **Matched recovery:** Entry into recovery disables the vAMM and restricts vault deposits. Before maturity, unmatched long exposure is trimmed pro rata to leave a matched book.
-
-See [Liquidation & Loss Allocation](../liquidation.md) for the triggers and allocation rules.
+See [Vault Mechanics](README.md#shares-and-value) for the effect of losses on share value and [Liquidation & Loss Allocation](../liquidation.md#how-losses-are-allocated) for funding shortfalls, matched recovery, and ADL.
 
 <a id="exposure-cap"></a>
 <a id="phi-φ--partial-funding"></a>

@@ -9,25 +9,17 @@ A short can become liquidatable when its remaining collateral no longer meets th
 | **Foreclosure: take over a position** | Anyone, while foreclosure is enabled and the transaction passes the required checks | The caller takes over an eligible share of the short and its allocated collateral, adds capital, and becomes responsible for that exposure. |
 | **Liquidation: force a market close** | An account with the Manager's `LIQUIDATOR_ROLE` | The position is closed through the available order-book and vAMM route. The caller does not keep the short exposure. |
 
-Foreclosure is permissionless when enabled; `Manager.liquidate()` requires `LIQUIDATOR_ROLE`. Both routes require an eligible short and execute without the holder’s approval.
+Both routes require an eligible short and execute without the holder’s approval.
 
 <a id="liquidation"></a>
 
 ## When does a short become eligible?
 
-A short receives fixed upfront and pays floating over time. Its health can deteriorate because the market value of its remaining obligation rises, because accrued floating payments reduce its collateral, or both.
-
-```text
-Debt value = absolute short notional × risk price
-LTV = debt value / eligible collateral
-Liquidation condition: LTV > maintenance LTV
-```
-
-These equations assume consistent notional, price, and collateral units. Maintenance valuation uses the vAMM's time-weighted price in normal mode, or the forward mark in matched mode. Maintenance thresholds are configured per market.
+A short becomes eligible when **LTV exceeds the market’s maintenance threshold**. See [Collateral Accounting](position-health.md#initial-and-maintenance-collateral) for the debt, collateral, and LTV calculations, and [Implied Rate & Mark Rate](vamm/README.md#collateral-and-liquidation) for the price inputs.
 
 **Liquidatable does not necessarily mean insolvent.** A short can breach its maintenance threshold while still having enough collateral to cover its marked debt. The purpose of intervention is to address that risk before the backing is exhausted.
 
-Longs prepay their fixed obligation, so they do not face this short-collateral liquidation process. They can still receive reduced floating payments or have exposure reduced during recovery. An underlying Aave or Morpho loan has its own liquidation rules.
+Longs are not subject to short-collateral liquidation. Funding shortfalls and recovery can reduce their payments or exposure, as described below.
 
 Liquidation and foreclosure are available only before market maturity. After maturity, the market follows its expiry and settlement rules.
 
@@ -49,9 +41,7 @@ Foreclosure transfers exposure rather than immediately trading it away. The call
 
 The documented configuration uses **10–25% slices**, with **full takeover only for zero-equity positions**. The deployed market configures `isForeclosureAllowed`, size limits, and incentive settings.
 
-The caller now owes the floating payments associated with the acquired short. They can hold the exposure or subsequently close it through an available execution route. A subsequent close incurs applicable execution fees and price impact.
-
-The takeover transfers exposure without a forced vAMM trade.
+The caller assumes the acquired short’s floating obligations. The takeover involves no forced vAMM trade; a later close incurs execution fees and price impact.
 
 ### Takeover accounting
 
@@ -77,13 +67,9 @@ In this notation, `base` is the accounted collateral balance and a negative `quo
 
 ## Liquidation: an authorized caller closes the exposure
 
-The forced-close route is a backstop when participants do not take over an unhealthy short, for example because keeping or unwinding the exposure is unattractive.
-
 After the shared checks, an authorized liquidator closes some or all of the short through the available order-book and vAMM route. The target's collateral funds the close, and the configured liquidation charges apply. Any uncovered closing shortfall is recorded against the vault.
 
-The caller receives the applicable liquidation reward without retaining the short. Unlike foreclosure, this route involves market execution and can create price impact. A call remains subject to venue capacity; a large position may require multiple calls.
-
-Liquidation charges and caller rewards use the market’s configured settings. Execution fees and price impact also apply.
+The caller receives the configured liquidation reward without retaining the short. Execution fees and price impact apply. Venue capacity can require a large position to be closed through multiple calls.
 
 ## How losses are allocated
 
@@ -125,7 +111,7 @@ Forward mark price = Floating APR × Remaining duration in days / 365
 
 Matched recovery is the market mode; ADL is a position-reduction mechanism within that mode.
 
-Within matched mode, terminating a distressed short can also reduce long positions pro rata and distribute the short's remaining collateral. This is **auto-deleveraging (ADL)**. ADL distributes the distressed short’s remaining collateral to longs; the payout is based on available collateral rather than a TWAP-priced close.
+**Auto-deleveraging (ADL)** reduces long positions pro rata when a distressed short is terminated in matched mode. Longs receive the short’s remaining collateral; the payout is based on available collateral rather than a TWAP-priced close.
 
 The mechanism reference identifies this internal call path:
 
@@ -140,9 +126,8 @@ Manager.liquidate()                 # requires LIQUIDATOR_ROLE
 
 ## What anyone can do
 
-- **Monitor position health**, including accrued payments and order reservations, rather than relying on a stored collateral balance alone.
+- **Monitor and manage their position:** See [Managing Collateral](../rates-trading/interactive-blocks.md) for health and collateral actions.
 - **Participate in foreclosure** when enabled, by taking eligible exposure and supplying enough capital to pass the combined-position health check.
-- **Manage their own position** by adding collateral or closing exposure through the available routes before it becomes eligible for intervention.
 
 Forced liquidation and parameter changes retain their respective role restrictions.
 

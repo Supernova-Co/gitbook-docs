@@ -1,29 +1,23 @@
 # Settlement
 
-Settlement accounts for the fixed and floating obligations of rates positions across a market. It applies to market positions regardless of the venue that provided execution.
+Settlement updates position balances across a market, regardless of whether trades filled on the order book or vAMM. For payment direction and cash-flow accounting, see [PnL](../../rates-trading/payments-and-pnl.md#settlement-pnl).
 
-## Fixed and floating obligations
-
-The long pays the fixed obligation upfront; the short receives it upfront. Floating payments then accrue according to the underlying rate over the holding period.
-
-The floating side increases the long's balance and reduces the short's balance as it is accounted for.
-
-## Accrual and balance updates
+## Accrual accounting
 
 <a id="funding-accrual"></a>
 
-An accumulated rate measure tracks growth in the underlying obligation over time. A position's notional and the growth since its previous accounting point determine the floating amount to account for.
+An accumulated rate measure tracks growth in the underlying obligation over time. The position’s notional and the change in that measure since its previous accounting point determine the floating payment to apply.
 
-Floating payments settle block by block into position balances. Wallet withdrawals are separate transactions.
+Closing and health checks account for outstanding floating accrual before evaluating the position. See [Collateral Accounting](../position-health.md) for how accrual affects balances and health.
 
-## Closing and expiry
+## Funding shortfalls
 
-Closing and health checks account for outstanding floating accrual. At expiry, final settlement resolves the market's remaining obligations.
+When vault backing cannot cover the net floating payment, the funding factor `φ` scales the vault-funded portion of long payments. See [Liquidation & Loss Allocation](../liquidation.md#2-insufficient-funding-reduces-long-receipts) for the calculation and recovery triggers.
 
-## Shortfalls
+## Related mechanics
 
-When vault backing cannot fund the net floating payment, settlement reduces long receipts through the funding factor `φ`. See [Liquidation & Loss Allocation](../liquidation.md).
-
-For the trader's view, see [PnL](../../rates-trading/payments-and-pnl.md).
+- [Implied Rate & Mark Rate](README.md#which-rate-is-used): Rate inputs for execution, risk checks, and floating payments.
+- [PnL: Closing and expiry](../../rates-trading/payments-and-pnl.md#close-position): Closing cash flows and final settlement.
+- [Fees: Open interest fee](../../rates-trading/fee.md#open-interest-fee): Fees accrued while a position remains open.
 
 <a id="settlement-accrual"></a>
