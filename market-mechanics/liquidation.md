@@ -111,9 +111,19 @@ availableForLongs = shortPayments + phi * netAmountOwedByVault
 
 This is the funding calculation described in the mechanism reference, with fixed-point scaling omitted. `phi` scales the **vault-funded gap**, not necessarily all payments collected from shorts. A long's actual receipts can therefore be lower than its expected floating payment.
 
+<a id="matched-recovery"></a>
+
 ### 3. Recovery can reduce long exposure
 
 The market enters one-way matched recovery mode if an epoch requires `φ < 1`, or if negative vault PnL exhausts its backing. Before maturity, entry into recovery trims the unmatched long exposure pro rata, leaving a 1:1 matched book. The vAMM is disabled and vault deposits are restricted.
+
+**Risk valuation:** Liquidation eligibility in matched recovery uses the **forward mark** instead of the normal vAMM TWAP. The current forward-rate input is the oracle-supplied floating rate, converted into a price for the remaining term:
+
+```text
+Forward mark price = Floating APR × Remaining duration in days / 365
+```
+
+Matched recovery is the market mode; ADL is a position-reduction mechanism within that mode.
 
 Within matched mode, terminating a distressed short can also reduce long positions pro rata and distribute the short's remaining collateral. This is **auto-deleveraging (ADL)**. ADL distributes the distressed short’s remaining collateral to longs; the payout is based on available collateral rather than a TWAP-priced close.
 

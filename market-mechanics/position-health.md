@@ -43,7 +43,9 @@ The notional and price must use consistent units. LTV rises when the valued obli
 
 The opening check uses a stricter safe LTV than the maintenance threshold. The safe threshold is a fraction of the maintenance threshold, leaving a buffer between opening a position and becoming liquidatable.
 
-A price floor affects the opening or modification requirement near expiry; it is not a floor on the maintenance valuation.
+### Floor margin
+
+**Floor margin:** A minimum margin requirement ensures that positions opened in the final **5 days before maturity cannot be liquidated**. The floor applies to opening and modification checks; it does not raise the liquidation threshold.
 
 ## Withdrawals
 

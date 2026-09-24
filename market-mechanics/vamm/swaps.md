@@ -14,7 +14,15 @@ Price impact depends on trade size and virtual curve depth.
 
 <a id="deterministic-decay"></a>
 
-As expiry approaches, the fixed obligation represented by the remaining term becomes smaller at an unchanged implied rate. Time decay and a change in the market's annualized rate are different effects.
+At an unchanged implied APR, the fixed payment for the remaining term decreases as expiry approaches:
+
+```text
+Price = Implied APR × Remaining duration in days / 365
+```
+
+Between trades, `decayFixed` adjusts the virtual reserves while preserving the constant product and implied APR. At expiry, the remaining-term value reaches zero.
+
+Time decay changes the remaining fixed-payment value without changing the annualized rate.
 
 ## Execution and costs
 
