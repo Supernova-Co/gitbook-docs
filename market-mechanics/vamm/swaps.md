@@ -20,4 +20,4 @@ As expiry approaches, the fixed obligation represented by the remaining term bec
 
 Routing can combine order-book and vAMM fills at different rates. The filled sizes and execution rates determine the position’s entry value; trading fees are charged separately.
 
-See [Pricing & Mark Rates](README.md), [Orders & Execution](../order-book.md), and [Fees](../../rates-trading/fee.md).
+See [Implied Rate & Mark Rate](README.md), [Orders & Execution](../order-book.md), and [Fees](../../rates-trading/fee.md).

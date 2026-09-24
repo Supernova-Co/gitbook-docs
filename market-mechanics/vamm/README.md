@@ -1,37 +1,80 @@
 ---
-description: >-
-  Rates Exchange virtual AMM lets users swap variable interest-rate exposure for
-  fixed-rate exposure. This section is a technical overview of how Rates
-  Exchange vAMM facilitates fixed for float swaps.
+description: How implied APR and the time-weighted mark are calculated and used for execution and collateral checks.
 ---
 
-# Pricing & Mark Rates
+# Implied Rate & Mark Rate
 
-A rates market has an annualized implied rate, a value for the remaining-term obligation, and prices used for execution and risk checks. These quantities serve different purposes.
+**Implied rate** is the annualized fixed rate quoted by the market. **Mark rate** is a time-weighted average used to value positions for collateral and liquidation checks. Floating payments use the underlying borrow rate.
 
-## Rate and remaining-term value
+## Implied rate
 
-An annualized rate expresses a cost over a year. The fixed payment represented by a contract depends on the time remaining until expiry. If the implied rate stays unchanged, the value of the remaining fixed obligation declines as the term runs out.
+The vAMM uses virtual base and quote reserves on a constant-product curve:
 
-At expiry, the remaining-term value reaches zero even if the quoted annualized rate is unchanged.
+```text
+k = baseReserve × quoteReserve
+Spot price = baseReserve / quoteReserve
+Implied APR = Spot price / Time to maturity in years
+```
 
-## The virtual curve
+Spot price is the fixed payment per unit of notional for the remaining term. Implied APR annualizes that payment. These formulas omit token and fixed-point scaling.
 
-The vAMM uses virtual reserves and a constant-product pricing relationship. Trading changes the reserve relationship and therefore the quoted value. Time decay accounts for the shrinking remaining term.
+**Example:** With 0.25 years remaining and a spot price of 0.0125 per unit of notional:
 
-Virtual reserves set curve depth; vault capital provides the backing for vAMM exposure.
+```text
+Implied APR = 0.0125 / 0.25 = 5%
+```
 
-## Execution and risk prices
+At that price, $100,000 in notional represents a $1,250 fixed payment before fees and price impact.
 
-Execution occurs against the liquidity available to a trade. Risk checks use a mark intended to avoid relying solely on an instantaneous price.
+**Used for execution:** The reserve ratio gives the vAMM’s marginal quote. A swap moves the reserves, so its average execution rate depends on trade size and curve depth. Order-book fills execute at matched order rates; the router can combine both venues.
 
-A time-weighted average reflects prices over a window. It can differ from the current executable rate, particularly when market conditions change. Opening checks use the highest of the time-weighted mark, spot price, and applicable price floor. Normal-mode liquidation checks use the time-weighted mark.
+## Mark rate
 
-## Near expiry
+The mark rate is a time-weighted average of implied APR observations from AMM trades. Each observation is weighted by how long that rate prevailed within the configured window:
 
-Near expiry, a small change in remaining-term value can produce a large change in quoted APR because the annualization period is short.
+```text
+Mark APR = Sum(Implied APR × Duration) / Total duration
+Mark price = Mark APR × Time to maturity in years
+```
 
-See [Swaps](swaps.md), [Supported Markets](../../get-started/supported-markets.md), and [Collateral Accounting](../position-health.md).
+**Example:** If implied APR is 4% for 20 minutes and 7% for 10 minutes within an illustrative 30-minute window:
+
+```text
+Mark APR = (4% × 20 + 7% × 10) / 30 = 5%
+```
+
+The window is set per market through `minPriceWindow`. The example illustrates the calculation, not the deployed window length.
+
+**Used for risk valuation:** The mark price values the short’s remaining obligation. Time weighting smooths brief changes in the live quote; execution still uses current venue prices.
+
+## Collateral and liquidation checks
+
+| Check | Price used |
+| --- | --- |
+| Open or modify a short | Highest of mark price, spot price, and the applicable price floor |
+| Liquidation eligibility in normal mode | Mark price |
+| Liquidation eligibility in matched recovery mode | Forward mark |
+
+```text
+Short debt value = Absolute short notional × Risk price
+LTV = Short debt value / Eligible collateral
+```
+
+Opening checks apply the stricter safe LTV threshold. Liquidation eligibility uses the maintenance LTV threshold. See [Collateral Accounting](../position-health.md) for collateral definitions and [Liquidation & Loss Allocation](../liquidation.md) for recovery rules.
+
+## Time to maturity
+
+Between trades, `decayFixed` adjusts the virtual reserves while preserving the constant product and implied APR. As the remaining term shortens, the fixed-payment price decreases:
+
+```text
+Price = Implied APR × Time to maturity in years
+```
+
+At expiry, the remaining-term value reaches zero. APR conversion applies only while time to maturity is positive.
+
+## Floating settlement
+
+The underlying market’s borrow rate determines floating payments. Implied APR sets the fixed side of a trade, while the mark rate provides the risk valuation. See [Settlement](settlement-accrual.md) for floating-payment accounting.
 
 <a id="vamm"></a>
 <a id="core-design"></a>

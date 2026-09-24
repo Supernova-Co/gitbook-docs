@@ -24,7 +24,7 @@
 
 * [Protocol Mechanics](market-mechanics/protocol-mechanics.md)
   * [Architecture & Routing](market-mechanics/bootstrap-liquidity.md)
-  * [Pricing & Mark Rates](market-mechanics/vamm/README.md)
+  * [Implied Rate & Mark Rate](market-mechanics/vamm/README.md)
     * [Swaps](market-mechanics/vamm/swaps.md)
   * [Settlement](market-mechanics/vamm/settlement-accrual.md)
   * [Collateral Accounting](market-mechanics/position-health.md)

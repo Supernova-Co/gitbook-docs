@@ -23,7 +23,7 @@ Orders route to the order book, the vAMM, or both, depending on available liquid
 ## Related mechanics
 
 - [Orders & Execution](order-book.md)
-- [Pricing & Mark Rates](vamm/README.md)
+- [Implied Rate & Mark Rate](vamm/README.md)
 - [Collateral Accounting](position-health.md)
 - [Settlement](vamm/settlement-accrual.md)
 - [Vault Mechanics](vault/README.md)
