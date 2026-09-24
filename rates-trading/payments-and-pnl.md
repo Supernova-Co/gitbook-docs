@@ -9,7 +9,7 @@ Floating payments settle block by block, updating your position balance:
 - **Long:** Receives floating payments.
 - **Short:** Pays floating payments.
 
-The amount depends on the underlying borrow rate, your position size, and the time held. Payments continue even when the market’s quoted fixed rate stays unchanged. They update your position balance rather than transferring to your wallet.
+The amount uses the **oracle-supplied floating rate**, your position size, and the time held. Neither the implied fixed rate nor the TWAP mark rate sets these floating payments. Payments continue even when the market’s quoted fixed rate stays unchanged. They update your position balance rather than transferring to your wallet.
 
 ## Position PnL
 
@@ -29,9 +29,15 @@ Settlement and position PnL describe **where PnL comes from**. Realized and unre
 - **Realized PnL:** Gains or losses already accounted for through floating-rate settlement or by closing exposure.
 - **Unrealized PnL:** The estimated gain or loss on exposure you still hold, based on its current valuation.
 
-Closing exposure realizes its position PnL. A partial close realizes only the portion closed. Realized position PnL depends on the execution price, which may differ from the mark used to display unrealized PnL.
+Closing exposure realizes its position PnL. A partial close realizes only the portion closed. Realized position PnL uses actual entry and exit execution cash flows. The exit price can differ from the valuation used to display unrealized PnL.
 
 Realized PnL does not necessarily mean withdrawable funds. Collateral requirements and open orders can still restrict withdrawals.
+
+## Liquidation valuation
+
+Normal-mode short liquidation checks use the **15-minute TWAP mark rate**, converted to a price for the remaining term. Matched recovery uses the forward mark. The risk mark determines eligibility; normal-mode liquidation execution uses available order-book and vAMM prices.
+
+See [Implied Rate & Mark Rate](../market-mechanics/vamm/README.md) for the formulas.
 
 <a id="close-position"></a>
 
