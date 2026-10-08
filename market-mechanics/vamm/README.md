@@ -15,7 +15,7 @@ description: How implied rates, mark rates, and floating rates determine executi
 | Terminal implied rate | AMM spot implied rate |
 | Trade execution | The rates at which the order fills on the order book or vAMM |
 | Short liquidation eligibility in normal trading | Mark rate |
-| Short liquidation eligibility in [matched recovery](../liquidation.md#matched-recovery) | Floating rate, currently used as the forward mark |
+| Short liquidation eligibility in [matched recovery](../vault/vault-guardrails.md#matched-recovery) | 3-day moving average of the underlying floating rate |
 | Floating settlement PnL | Floating rate |
 | Realized position PnL | Actual entry and exit execution rates, position sizes, and remaining terms |
 
@@ -84,7 +84,7 @@ After each routed trade, the protocol checks the difference between spot implied
 | --- | --- |
 | Open or modify a short | Highest of mark price, spot price, and the [minimum collateral price](../position-health.md#floor-margin) |
 | Liquidation eligibility in normal trading | Mark price |
-| Liquidation eligibility in [matched recovery](../liquidation.md#matched-recovery) | Forward mark, currently based on the floating rate |
+| Liquidation eligibility in [matched recovery](../vault/vault-guardrails.md#matched-recovery) | 3-day moving average of the underlying floating rate |
 
 See [Collateral Accounting](../position-health.md#floor-margin) for margin requirements and health calculations.
 

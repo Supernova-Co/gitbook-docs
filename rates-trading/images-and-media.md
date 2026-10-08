@@ -25,7 +25,7 @@ Opening a rates position creates exposure to a particular underlying rate and ex
 
 ## Position funding
 
-A long pays its fixed obligation upfront. A short receives the fixed payment and must provide sufficient collateral to back its future obligations. The fixed payment, total position collateral, and additional funds supplied by the user are different quantities.
+A long locks in its full fixed payment for the remaining term at entry. A short receives the fixed payment into its position collateral and must add sufficient collateral to back its future floating payments. The fixed payment, total position collateral, and additional funds supplied by the user are different quantities.
 
 The notional is the size of the rate exposure, not the amount transferred into the account.
 

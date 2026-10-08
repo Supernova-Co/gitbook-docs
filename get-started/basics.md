@@ -11,10 +11,10 @@ Each rates position has two sides:
 
 | Position | Fixed side (implied rate at execution) | Floating side (underlying rate) |
 | --- | --- | --- |
-| Long | Pays fixed upfront | Receives floating |
-| Short | Receives fixed upfront | Pays floating |
+| Long | Pays fixed: the full amount for the term is locked at entry | Receives floating |
+| Short | Receives fixed: the full amount for the term is credited to its collateral at entry | Pays floating |
 
-The upfront fixed payment is not the full principal of an underlying loan. It represents the fixed obligation for the position's notional and remaining term.
+The fixed payment is not the full principal of an underlying loan. It represents the fixed side for the position's notional and remaining term, and it stays within Rates Exchange: a long locks it in at entry and owes nothing further, while a short receives it into the collateral backing its position.
 
 ## Notional, funds, and expiry
 

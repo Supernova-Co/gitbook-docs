@@ -6,20 +6,22 @@ The vault backs vAMM exposure. See [Architecture & Routing](../bootstrap-liquidi
 
 Deposits receive shares representing a proportional interest in the vault’s NAV. Redemption converts those shares into assets at the applicable share value.
 
-Net asset value, or NAV, brings together the vault's deposited capital and its realized and unrealized PnL:
+Net asset value, or NAV, is the vault's deposited capital plus the income it has actually banked:
 
 ```text
-NAV = deposited capital, net of withdrawals + realized PnL + unrealized PnL
+NAV = deposited capital, net of withdrawals + settlement PnL + fees
 Share price = NAV / outstanding shares
 ```
 
-These expressions describe economic quantities without implementation scaling. NAV is floored at zero. Realized PnL includes settled income and losses; unrealized PnL accounts for the value of remaining exposure.
+NAV is floored at zero. Settlement PnL is the floating settlement the vault receives or pays on its net exposure. Fees include the vault's share of execution fees, liquidation penalties, and early-withdrawal fees, less any liquidation shortfalls.
+
+**Implied-rate moves do not change NAV.** Opening, closing, and re-pricing positions leave NAV unchanged apart from fees: the cash exchanged when the vault takes a position is offset one for one by the value of that position, so the price of the vault's inventory never enters NAV.
 
 ## Income and losses
 
-The vault's income includes its share of vAMM execution fees and the funding spread on matched exposure. An early-withdrawal fee, where applicable, is retained by the vault.
+The vault's income includes its share of vAMM execution fees, the funding spread on matched exposure, and most of each [liquidation penalty](../liquidation.md#liquidation-bonus). An early-withdrawal fee, where applicable, is retained by the vault.
 
-The vault also receives or pays floating settlement on its net exposure. Favorable settlement can add income; adverse settlement can reduce value. Liquidation shortfalls reduce share backing through [loss allocation](../liquidation.md#1-closing-shortfalls-reduce-vault-backing).
+The vault also receives or pays floating settlement on its net exposure. Favorable settlement can add income; adverse settlement can reduce value. Liquidation shortfalls reduce share backing through [vault losses](vault-guardrails.md#vault-losses).
 
 ## Redemption and capacity
 

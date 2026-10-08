@@ -4,7 +4,7 @@ Your rates position has two sources of PnL: **settlement PnL** from floating-rat
 
 ## Settlement PnL
 
-Floating payments settle block by block, updating your position balance:
+Floating payments accrue every 12-second epoch and are applied to your position balance when the position is next settled (see [lazy settlement](../market-mechanics/vamm/settlement-accrual.md#lazy-settlement)):
 
 - **Long:** Receives floating payments.
 - **Short:** Pays floating payments.
@@ -20,7 +20,7 @@ The market’s implied fixed rate affects the value of your remaining position:
 
 These describe rate changes with remaining time held constant. As expiry approaches, the remaining term also affects position value.
 
-**At entry, a long pays fixed and a short receives fixed upfront.** This payment establishes the position’s entry value. Receiving fixed upfront is not immediate profit: the short still owes floating payments and has an open position to settle or close.
+**At entry, the fixed payment for the full remaining term is exchanged.** A long locks it in; a short receives it into its position collateral. This payment establishes the position’s entry value. For a short, it is not immediate profit: it stays in the position's collateral while the short owes floating payments and has an open position to settle or close.
 
 ## Realized and unrealized PnL
 
@@ -35,7 +35,7 @@ Realized PnL does not necessarily mean withdrawable funds. Collateral requiremen
 
 ## Liquidation valuation
 
-Normal-mode short liquidation checks use the **15-minute TWAP mark rate**, converted to a price for the remaining term. Matched recovery uses the forward mark. The risk mark determines eligibility; normal-mode liquidation execution uses available order-book and vAMM prices.
+Normal-mode short liquidation checks use the **15-minute TWAP mark rate**, converted to a price for the remaining term. Matched recovery uses a 3-day moving average of the underlying floating rate. The risk mark determines eligibility; normal-mode liquidation execution uses available order-book and vAMM prices.
 
 See [Implied Rate & Mark Rate](../market-mechanics/vamm/README.md) for the formulas.
 
@@ -62,7 +62,7 @@ For a fully closed position, before fees:
 
 Deduct applicable fees that are not already included in those amounts.
 
-At expiry, the remaining exposure has no closing value. PnL comes from the difference between the upfront fixed payment and floating payments over the term, less fees.
+At expiry, the remaining exposure has no closing value. PnL comes from the difference between the fixed payment exchanged at entry and floating payments over the term, less fees.
 
 ## Further reading
 

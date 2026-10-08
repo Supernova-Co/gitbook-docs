@@ -21,7 +21,7 @@ layout:
 
 # Managing Collateral
 
-Short positions require collateral in their isolated market account. Long positions pay fixed upfront and cannot be liquidated.
+Short positions require collateral in their isolated market account. Long positions cannot be liquidated: their fixed payments for the full term are known and locked at entry.
 
 ## What changes a short’s health?
 
@@ -33,7 +33,7 @@ Short positions require collateral in their isolated market account. Long positi
 
 ## Opening and liquidation thresholds
 
-Opening or modifying a short requires a stricter health threshold than maintaining an existing position. A short can therefore avoid liquidation but still lack enough collateral to increase exposure or withdraw funds.
+Opening or modifying a short requires an LTV of at most **33%**, while a short becomes liquidatable only above **66%**. A short can therefore avoid liquidation but still lack enough collateral to increase exposure or withdraw funds.
 
 Health checks use the market’s risk valuation, which can differ from the current execution price. See [Collateral Accounting](../market-mechanics/position-health.md) for the calculation.
 
@@ -45,4 +45,4 @@ Adding collateral improves the short’s health. Excess collateral can be withdr
 
 See [Orders & Execution](../market-mechanics/order-book.md#collateral-for-orders-and-positions) for reservation rules.
 
-If the short breaches its maintenance requirement, it becomes eligible for [foreclosure or liquidation](../market-mechanics/liquidation.md).
+If the short breaches its maintenance requirement, it becomes eligible for [foreclosure, liquidation, or auto-deleveraging](../market-mechanics/liquidation.md).

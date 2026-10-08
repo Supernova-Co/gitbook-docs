@@ -17,21 +17,61 @@ Position balances change through trade cash flows, floating settlement, and coll
 
 ## Initial and maintenance collateral
 
-For a short, the debt value represents the cost assigned to closing its remaining exposure:
+For a short, debt is the cost of closing its remaining exposure, and LTV compares that debt with eligible collateral:
 
-```text
-Debt value = absolute notional × price per unit of notional
-LTV = debt value / eligible collateral
-```
+$$
+\text{Debt} = |N| \times P \qquad \text{LTV} = \frac{\text{Debt}}{C}
+$$
 
-The notional and price must use consistent units. LTV rises when the valued obligation increases or eligible collateral decreases. Higher LTV means less backing relative to the obligation.
+where $$N$$ is the notional, $$P$$ the price per unit of notional for the remaining term, and $$C$$ the eligible collateral. Prices come from APRs:
 
-| Check | Valuation | Eligible collateral |
-| --- | --- | --- |
-| Open or modify a short | The highest of the time-weighted mark, spot price, and applicable price floor | Position balance less funds reserved for orders |
-| Liquidation condition | Time-weighted mark in normal mode; forward mark in matched recovery | Position balance after orders are cancelled and accrued payments are accounted for |
+$$
+P = \text{APR} \times \frac{\text{days remaining}}{365}
+$$
 
-The opening check uses a stricter safe LTV than the maintenance threshold. The safe threshold is a fraction of the maintenance threshold, leaving a buffer between opening a position and becoming liquidatable.
+### Initial margin: open or modify a short
+
+The opening check values debt at the **highest** of three prices:
+
+$$
+P_{\text{IM}} = \max\left(P_{\text{mark}},\ P_{\text{spot}},\ P_{\text{floor}}\right)
+$$
+
+$$
+\text{LTV}_{\text{IM}} = \frac{|N| \times P_{\text{IM}}}{C_{\text{free}}} \le 33\%
+$$
+
+- $$P_{\text{mark}}$$: the [mark price](vamm/README.md#collateral-and-liquidation): the 15-minute TWAP of spot, or the 3-day moving average of the underlying floating rate in [matched recovery](vault/vault-guardrails.md#matched-recovery).
+- $$P_{\text{spot}}$$: the current vAMM spot price.
+- $$P_{\text{floor}}$$: the minimum collateral price; see [Floor margin](#floor-margin).
+- $$C_{\text{free}}$$: position balance less funds reserved for orders.
+
+### Maintenance margin: liquidation
+
+$$
+\text{LTV}_{\text{MM}} = \frac{|N| \times P_{\text{mark}}}{C} > 66\% \implies \text{liquidatable}
+$$
+
+- $$P_{\text{mark}}$$: the same mark price as in the initial margin.
+- $$C$$: position balance after orders are cancelled and accrued payments are accounted for.
+
+The gap between 33% and 66% is the buffer between opening a position and becoming liquidatable.
+
+**Example:** 30 days remaining, $$N = \$1{,}000{,}000$$, mark APR 4.5%, spot APR 5%, floor below both.
+
+$$
+P_{\text{IM}} = \max(4.5\%,\ 5\%,\ \text{floor}) \times \tfrac{30}{365} = 0.411\% \;\Rightarrow\; \text{Debt}_{\text{IM}} = \$4{,}110
+$$
+
+$$
+C_{\text{free}} \ge \frac{\$4{,}110}{33\%} = \$12{,}453 \text{ to open}
+$$
+
+At the 4.5% mark, liquidation debt is $$\$3{,}699$$, so the short becomes liquidatable if collateral falls below $$\$3{,}699 / 66\% = \$5{,}604$$.
+
+### Why spot is included in initial margin, not maintenance margin
+
+Margin usually uses a smoothed price, since spot can jump on a single trade. Only shorts can be liquidated, and their risk rises only when the price goes up, so taking the higher of mark and spot at opening is safely conservative. Maintenance excludes spot so that brief price pushes cannot trigger liquidations.
 
 ### Floor margin
 

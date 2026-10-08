@@ -3,7 +3,7 @@
 Rates Exchange vaults provide liquidity for rates trading through the vAMM. Deposit capital to receive vault shares and participate in the vault’s PnL.
 
 - **How it works:** The vault takes the other side of vAMM trades and provides backing for liquidations.
-- **PnL:** Trading fees, funding income, position gains or losses, and liquidation shortfalls contribute to the vault’s PnL.
+- **PnL:** Trading fees, funding income or losses on its net exposure, and liquidation shortfalls drive the vault’s PnL. Changes in the implied rate do not change the vault’s value.
 - **Share value:** Your shares represent a portion of the vault’s capital and accumulated PnL. Profits increase their value; losses reduce it.
 - **Withdrawal delay:** After requesting a withdrawal, wait **15 minutes** before redeeming your shares. This delay applies both before and after maturity.
 - **Withdrawal limits:** Exposure limits can restrict withdrawals to keep enough capital backing open positions.

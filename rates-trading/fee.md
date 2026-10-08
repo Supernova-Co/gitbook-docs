@@ -2,7 +2,7 @@
 
 | Fee | Rate |
 | --- | --- |
-| Trading fee | 1 bp |
+| Trading fee | 5 bps of the amount received |
 | Open interest (OI) fee | 15 bps annualized |
 | Vault early-withdrawal fee | 1% of net |
 | Gas fee | Typically $0.01 per action |

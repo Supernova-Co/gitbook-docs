@@ -23,4 +23,4 @@ layout:
 
 Short-rate concepts are now covered in [Trade Rates](../user-guides/trade-rates.md). For the lending strategy, see [Lend with Yield Boost](../fixed-rate-borrowing/fixed-rate-yield-boost/README.md).
 
-A short receives fixed upfront and pays floating over its holding period. It requires collateral and can be liquidated. See [Managing Collateral](interactive-blocks.md).
+A short receives its fixed payment into its position collateral at entry and pays floating over its holding period. It requires collateral and can be liquidated. See [Managing Collateral](interactive-blocks.md).

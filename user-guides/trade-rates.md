@@ -4,9 +4,9 @@ Use Rates Exchange to express a view on the rates traded in its [supported marke
 
 ## How it works
 
-A long pays its full fixed obligation upfront and receives floating payments over the chosen term. **A long rates position cannot be liquidated because its fixed payment is already fully paid.** The floating payments it receives continue to accrue over time; they are not settled upfront.
+A long pays fixed and receives floating payments over the chosen term. **A long rates position cannot be liquidated: its fixed payments for the full term are known and locked at entry, so it owes nothing further.** The floating payments it receives accrue over time; they are not paid at entry.
 
-A short receives fixed upfront and pays floating over time. It must maintain sufficient collateral and can be liquidated if that collateral falls below the market's maintenance requirement.
+A short receives its fixed payment for the term at entry, credited to its position collateral, and pays floating over time. It must maintain sufficient collateral and can be liquidated if that collateral falls below the market's maintenance requirement.
 
 A rise in the implied rate generally improves a long's exit value and worsens a short's. A fall generally has the opposite effect. Floating payments, the remaining term, and fees also affect the position's total PnL.
 
@@ -45,7 +45,7 @@ To exit, review [Closing & Expiry](../rates-trading/payments-and-pnl.md#close-po
 
 ## Risks and limitations
 
-Liquidity, execution prices, fees, and payment obligations affect the result. Short positions can be liquidated. A prepaid long still carries market, protocol, and payment-shortfall risk.
+Liquidity, execution prices, fees, and payment obligations affect the result. Short positions can be liquidated. A long cannot be liquidated but still carries market and protocol risk, and auto-deleveraging or matched recovery can reduce its exposure.
 
 ## Further reading
 

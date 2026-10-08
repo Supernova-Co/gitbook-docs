@@ -17,7 +17,34 @@ Place a short-rate limit order at your target fixed rate through the **Yield Boo
 
 <a id="how-the-economics-work"></a>
 
-The filled short receives fixed upfront and pays the floating borrow rate over its term. Your Aave deposit earns the lending rate, so the selected fixed rate is not the exact combined yield. Sizing, rate differences, and fees affect your return.
+The filled short receives its fixed payment for the term at entry, credited to the short's collateral, and pays the floating borrow rate over its term. Your Aave deposit earns the lending rate, so the selected fixed rate is not the exact combined yield. Sizing, rate differences, and fees affect your return.
+
+## Example
+
+You deposit **100,000 USDC** on Aave. Pool utilization is **80%** and the reserve factor is **10%**, so your deposit earns 72% of the borrow rate (80% × 90%). Yield Boost sizes the short to match that exposure:
+
+```text
+Short notional = 100,000 × 80% × (1 − 10%) = 72,000
+```
+
+Your limit order fills at a **6.5% fixed rate** with **30 days** until expiry. The fixed payment for the term is credited to the short's collateral at entry:
+
+```text
+Fixed payment = 72,000 × 6.5% × 30 / 365 = $384.66
+```
+
+Over the 30 days, the floating payments the short makes offset the Aave interest your deposit earns:
+
+| | Borrow rate averages 4% | Borrow rate averages 8% |
+| --- | --- | --- |
+| Aave lending interest | +$236.71 | +$473.42 |
+| Floating payments made by the short | −$236.71 | −$473.42 |
+| Fixed payment received at entry | +$384.66 | +$384.66 |
+| **Net over 30 days** | **+$384.66** | **+$384.66** |
+
+In both cases you earn $384.66, a **4.68%** annualized yield on the full deposit (6.5% × 72%), before fees. At a 4% borrow rate, the same deposit without the boost would have earned $236.71 (2.88%).
+
+The offset is exact only while utilization stays at 80%. If utilization changes, your Aave interest and the short's floating payments no longer match exactly.
 
 ## Get started
 
@@ -36,7 +63,7 @@ The filled short receives fixed upfront and pays the floating borrow rate over i
 <a id="closing-the-hedge"></a>
 
 - **Exit:** Cancel any unfilled order amount or close the filled short at available market terms. Closing can incur fees and leaves your Aave deposit unchanged.
-- **Expiry:** The short settles at the end of its term. **Auto-roll is upcoming and is not currently available.**
+- **Expiry:** Floating payments stop at the end of the term. The short's remaining balance is not returned automatically; [withdraw it](../../rates-trading/payments-and-pnl.md#at-expiry) yourself. **Auto-roll is upcoming and is not currently available.**
 
 ## Further reading
 

@@ -18,15 +18,15 @@ Expiry is the end of a market's term. Remaining term is the time left until that
 
 ## Long rate
 
-A position that pays fixed upfront and receives floating. It can be used to hedge floating borrowing costs or to express a rate view.
+A position that pays fixed and receives floating. Its fixed payments for the full term are known and locked at entry, so it cannot be liquidated. It can be used to hedge floating borrowing costs or to express a rate view.
 
 ## Short rate
 
-A position that receives fixed upfront and pays floating. It requires collateral and can be used to hedge floating lending income or express a rate view.
+A position that receives fixed and pays floating. Its fixed payment is credited to its collateral at entry, but it must keep paying the floating rate until maturity. Because those future payments are uncertain, it requires additional collateral and can be liquidated. It can be used to hedge floating lending income or express a rate view.
 
 ## Fixed payment
 
-The fixed obligation exchanged at entry for the market's remaining term. It is distinct from the underlying loan principal and from a short's additional collateral.
+The fixed side for the market's remaining term, exchanged at entry. A long locks it in; a short receives it into its position collateral. It is distinct from the underlying loan principal and from a short's additional collateral.
 
 ## Collateral
 

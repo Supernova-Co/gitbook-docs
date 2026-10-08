@@ -1,15 +1,16 @@
 # Liquidation & Loss Allocation
 
-A short can become liquidatable when its remaining collateral no longer meets the market's maintenance requirement. The protocol can then transfer the exposure to a funded participant or close it through market execution. If collateral and market backing are insufficient, separate loss-allocation rules determine who bears the shortfall.
+A short can become liquidatable when its remaining collateral no longer meets the market's maintenance requirement. Whitelisted accounts then resolve it by taking it over, closing it through the market, or in an extreme scenario closing it against the longs. If collateral and market backing are insufficient, separate loss-allocation rules determine who bears the shortfall.
 
-## Two ways to resolve an unhealthy short
+## Three ways to resolve an unhealthy short
 
-| Route | Who can initiate it? | What happens to the exposure? |
+| Route | Who can use it? | What happens to the short? |
 | --- | --- | --- |
-| **Foreclosure: take over a position** | Anyone, while foreclosure is enabled and the transaction passes the required checks | The caller takes over an eligible share of the short and its allocated collateral, adds capital, and becomes responsible for that exposure. |
-| **Liquidation: force a market close** | An account with the Manager's `LIQUIDATOR_ROLE` | The position is closed through the available order-book and vAMM route. The caller does not keep the short exposure. |
+| **Foreclosure** | Whitelisted accounts initially, such as the insurance fund | Taken over: the caller assumes part of the short and its debt. |
+| **Liquidation** | Whitelisted liquidators | Closed through the order book and vAMM, with the vault as backstop. |
+| **Auto-deleveraging (ADL)** | Whitelisted liquidators | Closed against all longs, pro rata. |
 
-Both routes require an eligible short and execute without the holder’s approval.
+All three execute without the holder's approval. Rates Exchange runs liquidation bots that monitor position health, including floating payments not yet written to balances (see [lazy settlement](vamm/settlement-accrual.md#lazy-settlement)).
 
 <a id="liquidation"></a>
 
@@ -19,13 +20,13 @@ A short becomes eligible when **LTV exceeds the market’s maintenance threshold
 
 **Liquidatable does not necessarily mean insolvent.** A short can breach its maintenance threshold while still having enough collateral to cover its marked debt. The purpose of intervention is to address that risk before the backing is exhausted.
 
-Longs are not subject to short-collateral liquidation. Funding shortfalls and recovery can reduce their payments or exposure, as described below.
+Longs cannot be liquidated: their fixed payments for the full term are known and locked at entry, so they owe nothing further. Auto-deleveraging and matched recovery can still reduce their exposure, as described below.
 
-Liquidation and foreclosure are available only before market maturity. After maturity, the market follows its expiry and settlement rules.
+Liquidation is available only before market maturity. After maturity, the market follows its expiry and settlement rules.
 
 <a id="standard-flow"></a>
 
-## Shared checks before either route
+## Shared checks before any route
 
 1. **Cancel the target's resting orders.** Release the collateral reserved for them.
 2. **Account for accrued floating payments.** Update the position's `base` balance before assessing health. Accrual can reveal a shortfall that was absent from the stored balance.
@@ -33,103 +34,79 @@ Liquidation and foreclosure are available only before market maturity. After mat
 
 Order cancellation and eligibility checks execute atomically; a failed eligibility check reverts the cancellation.
 
-<a id="foreclosure-flow"></a>
-
-## Foreclosure: anyone can take over eligible exposure
-
-Foreclosure transfers exposure rather than immediately trading it away. The caller receives the selected portion of the short and its allocated collateral, including the applicable incentive, and supplies additional capital. The caller's resulting combined position must pass the stricter opening or modification health check.
-
-The documented configuration uses **10–25% slices**, with **full takeover only for zero-equity positions**. The deployed market configures `isForeclosureAllowed`, size limits, and incentive settings.
-
-The caller assumes the acquired short’s floating obligations. The takeover involves no forced vAMM trade; a later close incurs execution fees and price impact.
-
-### Takeover accounting
-
-The following **accounting pseudocode** describes the transfer, rather than a callable ABI. `allocatedBase` includes the collateral and incentive assigned by the foreclosure rules; incentive sourcing and rounding are omitted.
-
-```text
-# Preconditions: before maturity, foreclosure enabled, target eligible.
-# All balances include accrued payments; target orders are cancelled.
-
-transferredQuote = target.quote * permittedSlice
-
-caller.base  = caller.base + capitalInfusion + allocatedBase
-caller.quote = caller.quote + transferredQuote
-
-# The target's corresponding exposure and collateral are removed.
-# Revert the whole transaction unless the caller's combined position
-# satisfies the market's opening / modification health requirement.
-```
-
-In this notation, `base` is the accounted collateral balance and a negative `quote` is short notional. See [Collateral Accounting](position-health.md).
-
 <a id="liquidation-flow"></a>
 
-## Liquidation: an authorized caller closes the exposure
+## Liquidation: close through the market
 
-After the shared checks, an authorized liquidator closes some or all of the short through the available order-book and vAMM route. The target's collateral funds the close, and the configured liquidation charges apply. Any uncovered closing shortfall is recorded against the vault.
+An authorized liquidator closes some or all of the short through the available order-book and vAMM route, with the vault taking the other side of vAMM fills. The liquidator does not keep the short exposure. The target's collateral funds the close. Any uncovered closing shortfall is recorded against the vault.
 
-The caller receives the configured liquidation reward without retaining the short. Execution fees and price impact apply. Venue capacity can require a large position to be closed through multiple calls.
+Execution fees and price impact apply. Venue capacity can require a large position to be closed through multiple calls.
 
-## How losses are allocated
+<a id="liquidation-bonus"></a>
 
-Closing shortfalls, funding shortfalls, and exhausted backing trigger the following loss-allocation mechanisms.
+### Liquidation penalty
 
-### 1. Closing shortfalls reduce vault backing
+The liquidation penalty is **1% of the total position sold**. The liquidator receives 10% of the penalty. Of the rest, 90% goes to the vault and 10% to the protocol.
 
-If the close cannot recover the amount owed, `accrueBadDebt` records the uncovered loss against the vault. LPs bear the reduction through the value backing their shares.
+**Example:** If a liquidation sells $10,000 of a position, the penalty is $100: $10 goes to the liquidator, $81 to the vault, and $9 to the protocol.
 
-Recorded vault assets are floored at zero.
+The penalty is paid from the position's remaining collateral and is limited to what remains. Any collateral left after the close and penalty stays in the position's isolated account.
 
-### 2. Insufficient funding reduces long receipts
+<a id="foreclosure-flow"></a>
 
-During settlement, the vault checks whether its remaining backing can fund the net floating payment owed to longs. If it cannot, the funding factor `φ` falls below 1. Longs share the available payment pro rata while shorts remain liable for their full floating payment and fee.
+## Foreclosure: take over the position
 
-For an epoch in which the vault owes the difference:
+Foreclosure transfers part of the short to the caller instead of trading it away. It is **whitelisted initially**.
 
-```text
-headroom = max(totalAssets + vaultPnL, 0)
-netAmountOwedByVault = longPayments - shortPayments  # positive here
-phi = min(1, headroom / netAmountOwedByVault)
+The caller takes on a share of the short's notional and its debt. In return, it receives collateral worth that debt at the mark, plus a **premium of 25% of that share's equity**. The rest of that share's equity stays with the position holder. A foreclosure takes 10–25% of the position, or all of it; a position with no equity left can only be taken over in full. The caller's resulting combined position must pass the stricter opening health check.
 
-availableForLongs = shortPayments + phi * netAmountOwedByVault
-```
+**Example:** A short with $100,000 notional has $1,500 of collateral and $1,000 of debt at the mark, so its equity is $500. The insurance fund forecloses 20%: it takes on $20,000 notional and $200 of debt. That share's equity is $100, so the fund receives $200 + 25% × $100 = **$225** of collateral. The other $75 of that equity stays with the holder, whose position is now $80,000 notional with $1,275 of collateral and $800 of debt.
 
-This is the funding calculation described in the mechanism reference, with fixed-point scaling omitted. `phi` scales the **vault-funded gap**, not necessarily all payments collected from shorts. A long's actual receipts can therefore be lower than its expected floating payment.
+The caller assumes the acquired short's floating obligations. The takeover involves no mandatory vAMM or order-book trade.
 
-<a id="matched-recovery"></a>
+The insurance fund uses part of its funds to take over distressed positions through foreclosure before they reach ADL.
 
-### 3. Recovery can reduce long exposure
+<a id="adl"></a>
 
-The market enters one-way matched recovery mode if an epoch requires `φ < 1`, or if negative vault PnL exhausts its backing. Before maturity, entry into recovery trims the unmatched long exposure pro rata, leaving a 1:1 matched book. The vAMM is disabled and vault deposits are restricted.
+## Auto-deleveraging (ADL)
 
-**Risk valuation:** Liquidation eligibility in matched recovery uses the **forward mark** instead of the normal vAMM TWAP. The current forward-rate input is the oracle-supplied floating rate, converted into a price for the remaining term:
+Liquidating through the market can always be used, but repeatedly draining the vault to absorb liquidations weakens the market. Once the vault has already absorbed significant losses in a market and the insurance fund is depleted, a whitelisted liquidator can use ADL instead for a short whose LTV is close to 100%.
 
-```text
-Forward mark price = Floating APR × Remaining duration in days / 365
-```
+ADL closes the whole short against every long, pro rata. Each long's position is reduced by its share of the short's notional, and each long receives the same share of the short's collateral, up to the value of its debt at the mark (the TWAP mark rate, or the 3-day moving average in matched recovery). Any collateral above that is returned to the short's owner. No liquidation penalty applies.
 
-Matched recovery is the market mode; ADL is a position-reduction mechanism within that mode.
+- **At 100% LTV**, the short's collateral exactly matches its debt at the mark, so longs are closed at the mark.
+- **Above 100% LTV**, there is less collateral than the debt is worth, so longs are closed at a worse price than the mark.
 
-**Auto-deleveraging (ADL)** reduces long positions pro rata when a distressed short is terminated in matched mode. Longs receive the short’s remaining collateral; the payout is based on available collateral rather than a TWAP-priced close.
+The decision that the vault has absorbed enough losses and the insurance fund is depleted is made by the liquidation bots, not on-chain. In [matched recovery](vault/vault-guardrails.md#matched-recovery), ADL is the only route for liquidating a short.
 
 The mechanism reference identifies this internal call path:
 
 ```text
 Manager.liquidate()                 # requires LIQUIDATOR_ROLE
-  -> Manager._terminateShort()      # internal matched-mode branch
+  -> Manager._terminateShort()      # write-off branch
      -> vault.distributeBaseToLongs()
      -> vault.writeOffTrim()
 ```
 
-`_terminateShort()` is an internal branch of the role-restricted liquidation path. The recovery latch is evaluated during transactions calling `Vault.settleFunding`.
+## How losses from underwater shorts are recovered
 
-## What anyone can do
+A short is underwater when its collateral no longer covers its debt at the mark. The shortfall is covered in this order:
 
-- **Monitor and manage their position:** See [Managing Collateral](../rates-trading/interactive-blocks.md) for health and collateral actions.
-- **Participate in foreclosure** when enabled, by taking eligible exposure and supplying enough capital to pass the combined-position health check.
+1. **The position's own collateral.** Foreclosure, liquidation, or ADL uses whatever collateral remains.
+2. **The vault.** If a close through the market cannot recover the amount owed, `accrueBadDebt` records the uncovered loss against the vault.
+3. **The insurance fund.** It takes over distressed positions through foreclosure before they reach ADL.
+4. **Longs, through ADL.** Once the vault has absorbed significant losses and the insurance fund is depleted, ADL closes the short against the longs.
 
-Forced liquidation and parameter changes retain their respective role restrictions.
+<a id="insurance-fund"></a>
+
+### The insurance fund
+
+A share of protocol fees is set aside as a protocol-level insurance fund. It takes over distressed positions through foreclosure before they reach ADL, and protects users in case of a hack. Because it pools fees across all markets and over time, it can cover losses larger than a single market's fees.
+
+## What you can do
+
+Keep a short healthy by adding collateral or reducing exposure. See [Managing Collateral](../rates-trading/interactive-blocks.md) for health and collateral actions.
+
 
 ## Further reading
 

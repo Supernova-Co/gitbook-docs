@@ -13,7 +13,7 @@ Rates Exchange positions depend on market execution, collateral, settlement, and
 
 ## Liquidation and payment shortfalls
 
-Short positions can become liquidatable when collateral no longer meets the required health conditions. A long's prepaid fixed obligation does not eliminate the possibility of losses, reduced receipts, or interruption of the intended hedge.
+Short positions can become liquidatable when collateral no longer meets the required health conditions. A long cannot be liquidated, but that does not eliminate the possibility of losses or of auto-deleveraging or matched recovery reducing its exposure and interrupting the intended hedge.
 
 Losses may affect vault participants and the payments available to other market participants. Read [Liquidation & Loss Allocation](../market-mechanics/liquidation.md) alongside the guide for your product.
 
