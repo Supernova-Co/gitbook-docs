@@ -47,7 +47,7 @@ See [Implied Rate & Mark Rate](../market-mechanics/vamm/README.md) for the formu
 
 <a id="at-expiry"></a>
 
-**At expiry:** Floating accrual ends at maturity. Final settlement accounts for outstanding obligations and determines the remaining balance.
+**At expiry:** Floating accrual ends at maturity, and the position can no longer be traded or liquidated. Nothing is paid out automatically: once the market has expired, withdraw the remaining collateral yourself.
 
 **Continuing exposure:** Open a position covering the next term. **Auto-roll is upcoming and is not currently available.**
 

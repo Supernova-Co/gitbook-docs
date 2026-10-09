@@ -14,8 +14,10 @@ Explore how execution, accounting, and market backing work beneath the trading i
 | Topic | What you’ll find |
 | --- | --- |
 | **[Settlement](vamm/settlement-accrual.md)** | How fixed and floating obligations are accounted for. |
+| **[Oracle](oracle.md)** | How the underlying floating rate reaches each market, and its safeguards. |
 | **[Collateral Accounting](position-health.md)** | How balances, reserved funds, and health checks interact. |
 | **[Liquidation & Loss Allocation](liquidation.md)** | How unhealthy shorts and payment shortfalls are handled. |
+| **[Open Interest Caps](open-interest-caps.md)** | How each market limits its total open interest. |
 
 ## Vaults & configuration
 

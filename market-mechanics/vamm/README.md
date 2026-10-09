@@ -69,7 +69,7 @@ Time weighting smooths short-lived changes in the live implied rate. Trades stil
 
 ## Price deviation cap
 
-The current spot-to-mark deviation cap is **200 bps**, equivalent to **2 percentage points of APR**.
+The spot-to-mark deviation cap is a per-market parameter expressed in percentage points of implied APR.
 
 After each routed trade, the protocol checks the difference between spot implied APR and mark APR:
 

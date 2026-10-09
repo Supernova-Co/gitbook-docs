@@ -13,7 +13,7 @@ Rates Exchange orders express a desired rate exposure in a market with a specifi
 
 A resting order is different from an open position. Check whether an order is active, filled, partially filled, or cancelled before deciding what exposure remains.
 
-Limit orders are described as good until cancelled. At market expiry, the order book closes and remaining open orders are cancelled.
+Limit orders are good until cancelled. At market expiry, the order book stops matching and all the collateral is free to withdraw.
 
 ## Collateral for orders and positions
 

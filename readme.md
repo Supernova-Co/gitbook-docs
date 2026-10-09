@@ -1,46 +1,33 @@
----
-layout:
-  width: default
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
-  metadata:
-    visible: true
-  tags:
-    visible: true
-  actions:
-    visible: true
----
+# Mission: Universal Hedging Layer for Internet Capital Markets
 
-# Interest Rates Market
+Every economy runs on a predictable cost of capital.
 
-**To scale the internet capital market, rates should be discovered efficiently—without requiring to move the full notional amount.**
+Humanity does not advance simply because more assets can be traded. It advances when capital can be deployed with confidence, allowing borrowers to plan, businesses to invest, and institutions to manage risk.
 
-An open, capital-efficient rates market should directly match market participants with specific rate needs.
+This is the promise of DeFi 2.0: **predictable capital formation for real economic activity.**
 
-For example,
+## Trading Is Here. Hedging Is Not.
 
-1. Borrowers want predictability in their cost of capital
-2. Assets managers want stable, predictable returns
-3. Swap traders want 24/7, instant rates settlement
-4. International organizations want control over their FX exposure while holding stablecoin
+Onchain finance has built powerful infrastructure for trading through spot DEXs, perpetual DEXs, and centralized exchanges.
 
-\
-**Rates Exchange is the composable engine for discovering, hedging, and trading the cost of capital.** It first enables fixed rate borrowing and lending from any money market through capital-efficient rates trading.
+But the infrastructure for hedging remains missing.
 
-Through opening up the rates trading markets, ParRate enables:
+Borrowers are exposed to volatile interest rates. Stablecoin holders must tolerate currency risk to keep and deploy money onchain. Institutions, stablecoin neobanks, and risk curators cannot reliably manage these exposures with existing financial applications.
 
-1. **Fixed-rate and term borrowing** powered by existing money markets including Aave, Morpho, Euler, and Kamino
-2. **Capital-efficient rates trading** by going long or short interest rates with < 1.5% of the principal size
-3. **Continuous rate discovery**, as markets trade rates in real time rather than only at loan origination or transfer of full principal amount
-4. **Unified yield curve**, aggregating data from all underlying money markets into one transparent rate layer
+Trading allows capital to move. **Hedging allows capital to commit.**
 
-\
-**Our vision is clear:** the financial system runs on rates, predictability, and seamless risk transfer—Rates Exchange brings them on-chain with capital efficient, 24/7, real-time settlement.
+Rates Exchange provides both sides of this market.
+
+### For Hedgers
+
+Rates Exchange is a hedging layer built on top of the protocols institutions already use. Borrowers and applications can access predictable rates through one API call or one click while retaining the security and liquidity of protocols such as Aave and Morpho.
+
+### For Traders
+
+Rates Exchange is a high-performance, CLOB-based exchange for trading economically important rates that lack liquid spot markets. We are starting with interest rates, followed by compute, FX, and fixed-rate equity perps.
+
+Traders provide liquidity, express views on rates efficiently, and enable transparent price discovery.
+
+Traditional rates markets trade approximately **$18 trillion per day**. We believe onchain rates markets can become equally significant over the next decade, powered by global access, unified liquidity, 24/7 availability, and transparent settlement.
+
+Rates Exchange is building the **canonical exchange for onchain rates**, connecting those who trade risk with those who need to hedge it.

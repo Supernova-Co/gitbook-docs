@@ -38,10 +38,10 @@ P_{\text{IM}} = \max\left(P_{\text{mark}},\ P_{\text{spot}},\ P_{\text{floor}}\r
 $$
 
 $$
-\text{LTV}_{\text{IM}} = \frac{|N| \times P_{\text{IM}}}{C_{\text{free}}} \le 33\%
+\text{LTV}_{\text{IM}} = \frac{|N| \times P_{\text{IM}}}{C_{\text{free}}} \le \text{LTV}_{\text{open}}
 $$
 
-- $$P_{\text{mark}}$$: the [mark price](vamm/README.md#collateral-and-liquidation): the 15-minute TWAP of spot, or the 3-day moving average of the underlying floating rate in [matched recovery](vault/vault-guardrails.md#matched-recovery).
+- $$P_{\text{mark}}$$: the [mark price](vamm/README.md#collateral-and-liquidation): the TWAP of spot, or the moving average of the underlying floating rate in [matched recovery](vault/vault-guardrails.md#matched-recovery).
 - $$P_{\text{spot}}$$: the current vAMM spot price.
 - $$P_{\text{floor}}$$: the minimum collateral price; see [Floor margin](#floor-margin).
 - $$C_{\text{free}}$$: position balance less funds reserved for orders.
@@ -49,13 +49,13 @@ $$
 ### Maintenance margin: liquidation
 
 $$
-\text{LTV}_{\text{MM}} = \frac{|N| \times P_{\text{mark}}}{C} > 66\% \implies \text{liquidatable}
+\text{LTV}_{\text{MM}} = \frac{|N| \times P_{\text{mark}}}{C} > \text{LTV}_{\text{liq}} \implies \text{liquidatable}
 $$
 
 - $$P_{\text{mark}}$$: the same mark price as in the initial margin.
 - $$C$$: position balance after orders are cancelled and accrued payments are accounted for.
 
-The gap between 33% and 66% is the buffer between opening a position and becoming liquidatable.
+$$\text{LTV}_{\text{open}}$$ is set below $$\text{LTV}_{\text{liq}}$$. The gap between them is the buffer between opening a position and becoming liquidatable. Both thresholds vary by market and are shown in the app. The first markets launch with conservative values: $$\text{LTV}_{\text{open}}$$ of 33% and $$\text{LTV}_{\text{liq}}$$ of 66%.
 
 **Example:** 30 days remaining, $$N = \$1{,}000{,}000$$, mark APR 4.5%, spot APR 5%, floor below both.
 
@@ -64,10 +64,10 @@ P_{\text{IM}} = \max(4.5\%,\ 5\%,\ \text{floor}) \times \tfrac{30}{365} = 0.411\
 $$
 
 $$
-C_{\text{free}} \ge \frac{\$4{,}110}{33\%} = \$12{,}453 \text{ to open}
+C_{\text{free}} \ge \frac{\$4{,}110}{33\%} = \$12{,}455 \text{ to open}
 $$
 
-At the 4.5% mark, liquidation debt is $$\$3{,}699$$, so the short becomes liquidatable if collateral falls below $$\$3{,}699 / 66\% = \$5{,}604$$.
+At the 4.5% mark, liquidation debt is $$\$3{,}699$$, so the short becomes liquidatable if collateral falls below $$\$3{,}699 / 66\% = \$5{,}605$$.
 
 ### Why spot is included in initial margin, not maintenance margin
 

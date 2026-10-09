@@ -25,13 +25,19 @@ Vault guardrails are constraints on activity, not a guarantee of a minimum share
 
 ## Underlying rates and protocol dependencies
 
-Floating settlement depends on the rate information used by each market. The source protocol and the process that supplies its rate are part of the strategy's dependencies.
+Floating settlement depends on the rate information used by each market. The source protocol and the process that supplies its rate are part of the strategy's dependencies. See [Oracle](../market-mechanics/oracle.md).
+
+The oracle's maximum APR keeps the consequences of a compromised feed small, because floating payments accrue per epoch and a bad update can only push the rate up to that bound. With a 30% maximum, an attacker who controls the oracle for a full hour can make a **$10,000,000 long** earn at most $10,000,000 × 30% × 1 / 8,760 = **$342** of floating payments for that hour, about $285 more than at a 5% rate.
 
 Smart contract failures and failures in connected services can affect funds or the ability to act. Keep the risks of an underlying lending protocol separate from those introduced by Rates Exchange.
 
 ## Audits
 
 Audits provide evidence about a reviewed scope and version. They do not guarantee that every deployed component or future change is free of defects. See [Audits](audits.md).
+
+## Operational security
+
+The team treats operational security as seriously as contract security. Key management, access control, infrastructure, and incident response follow the Security Alliance's [Operational Security framework](https://frameworks.securityalliance.org/opsec/overview/).
 
 ## Security contact
 
