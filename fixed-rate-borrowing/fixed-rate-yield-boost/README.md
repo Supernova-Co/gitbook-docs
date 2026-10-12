@@ -54,7 +54,7 @@ The offset is exact only while utilization stays at 80%. If utilization changes,
 
 ## Manage your position
 
-- **Collateral:** The short needs separate collateral and can be liquidated. Monitor its health and add collateral or reduce exposure when needed; your Aave deposit does not automatically back it.
+- **Collateral:** The short needs separate collateral and can be liquidated. Monitor its health and add collateral or reduce exposure when needed; your Aave deposit does not automatically back it. A liquidated short no longer boosts the deposit. When you open or manage a boost, you can deposit collateral up to the **max rate coverage** amount, which keeps the short safe from liquidation as long as the implied rate and the underlying borrow rate stay at or below Aave's maximum borrow rate.
 
 <a id="withdrawing-the-underlying-deposit"></a>
 
@@ -67,6 +67,7 @@ The offset is exact only while utilization stays at 80%. If utilization changes,
 
 ## Further reading
 
+- [How Boost Yield Math Works](how-boost-yield-math-works.md)
 - [Fund & Withdraw](../../get-started/fund-and-withdraw.md)
 - [Managing Collateral](../../rates-trading/interactive-blocks.md)
 - [PnL](../../rates-trading/payments-and-pnl.md)

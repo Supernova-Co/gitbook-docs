@@ -13,6 +13,7 @@
 * [User Guides](user-guides/user-guides.md)
   * [Borrow at a Fixed Rate](fixed-rate-borrowing/user-guide-one-click-fixing-rate/borrow-at-fixed-rate-from-aave-morpho.md)
   * [Lend with Yield Boost](fixed-rate-borrowing/fixed-rate-yield-boost/README.md)
+    * [How Boost Yield Math Works](fixed-rate-borrowing/fixed-rate-yield-boost/how-boost-yield-math-works.md)
   * [Trade Rates](user-guides/trade-rates.md)
   * [Provide Vault Liquidity](user-guides/provide-vault-liquidity.md)
 

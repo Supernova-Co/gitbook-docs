@@ -44,6 +44,6 @@ For traders, the position provides rate exposure without creating an underlying 
 
 ## How execution works
 
-An order book matches orders, while a virtual automated market maker, or vAMM, provides another execution venue. The vault is the counterparty to trades executed through the vAMM. Availability and execution depend on market liquidity and applicable constraints.
+An order book matches orders, while a virtual automated market maker, or vAMM, provides another execution venue. The vault is the counterparty to trades executed through the vAMM. See [Architecture & Routing](market-mechanics/bootstrap-liquidity.md).
 
 Start with [Rates Exchange Basics](get-started/basics.md), check [Supported Markets](get-started/supported-markets.md), or read our [Mission](README.md).

@@ -41,6 +41,6 @@ Cancelling an order releases its reservation but does not close any position cre
 
 Collateral is checked again when an order is about to fill. If it no longer supports the trade, the fill is blocked and the order is removed.
 
-See [Trade Rates](../user-guides/trade-rates.md), [Open Position](../rates-trading/images-and-media.md), and [Collateral Accounting](position-health.md).
+See [Trade Rates](../user-guides/trade-rates.md), [Rates Exchange Basics](../get-started/basics.md), and [Collateral Accounting](position-health.md).
 
 <a id="order-book"></a>
