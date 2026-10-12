@@ -33,7 +33,7 @@ $$
 N = L \cdot (1 - rf) \cdot u_{\text{open}}
 $$
 
-$u_{\text{open}}$ is the pool **utilization at open**. It sizes the short so that, at that moment, the short's floating payments equal the deposit's floating income.
+$u_{\text{open}}$ is the pool **utilization at open**. It sizes the short so that, at that moment, the short's floating payments equal the deposit's floating income. The notional is counted in [Debt Units](../../market-mechanics/bootstrap-liquidity.md#debt-unit), so the amount it covers grows with Aave's borrow index, in step with the interest the deposit earns.
 
 For a market order, $u_{\text{open}}$ is Aave's live utilization. For a limit order, the fill time is not known in advance, so $u_{\text{open}}$ is the utilization Aave's rate curve implies at your limit rate. If utilization at fill differs from that estimate, the short is slightly larger or smaller than the floating income it covers, and the drift described below applies from the first day.
 

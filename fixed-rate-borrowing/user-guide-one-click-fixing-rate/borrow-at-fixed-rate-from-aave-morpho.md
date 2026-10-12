@@ -45,6 +45,8 @@ Over the 30 days, the long receives floating payments at the Aave borrow rate, o
 
 Whether rates rise or fall, your borrowing cost stays at the 5% fixed rate, before fees.
 
+The amount the hedge covers grows with accrued borrow interest, so it tracks a loan balance that is also growing. A hedge sized to your loan at entry stays sized to it as interest accrues. See [Debt Units](../../market-mechanics/bootstrap-liquidity.md#debt-unit).
+
 ## Manage your position
 
 - **Liquidation:** Your Rates Exchange long **cannot be liquidated**: its fixed payments for the full term are known and locked at entry, so it owes nothing further. Your Aave loan can still be liquidated, so continue monitoring its collateral and health.

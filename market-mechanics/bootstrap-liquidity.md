@@ -13,6 +13,14 @@ Rates Exchange separates the account holding funds, the execution venues, the ma
 | Vault | Acts as counterparty to vAMM flow and participates in market loss absorption |
 | Rate data and settlement | Supplies the underlying-rate information used to account for floating payments |
 
+<a id="debt-unit"></a>
+
+## Units
+
+Positions, orders, and notional are counted in **Debt Units (DU)**. Each DU represents the borrow rate on one share of debt in the underlying lending market. The amount of USDC hedged by one DU increases over time as borrow interest accrues, so a position's hedged amount grows in step with a loan balance that is accruing interest.
+
+The implied rate is the price of one DU's interest until maturity, quoted as a simple yearly rate. See [Implied Rate & Mark Rate](vamm/README.md#implied-rate).
+
 ## Order routing
 
 Orders route to the order book, the vAMM, or both, depending on available liquidity. Fills update the trader’s position and balance within the same rates market.

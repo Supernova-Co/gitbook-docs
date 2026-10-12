@@ -10,7 +10,11 @@ The annualized rate expressed through trading. It describes the remaining rate e
 
 ## Notional
 
-The size of the rate exposure, not the amount deposited. See [Rates Exchange Basics](get-started/basics.md#notional-funds-and-expiry).
+The size of the rate exposure, counted in Debt Units. It is not the amount deposited. See [Rates Exchange Basics](get-started/basics.md#notional-funds-and-expiry).
+
+## Debt Unit (DU)
+
+The unit positions and notional are counted in. One DU represents the borrow rate on one share of debt in the underlying lending market, and the USDC it hedges grows as borrow interest accrues. See [Architecture & Routing](market-mechanics/bootstrap-liquidity.md#debt-unit).
 
 ## Expiry and remaining term
 

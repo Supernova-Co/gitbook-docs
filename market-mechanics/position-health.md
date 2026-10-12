@@ -23,7 +23,7 @@ $$
 \text{Debt} = |N| \times P \qquad \text{LTV} = \frac{\text{Debt}}{C}
 $$
 
-where $$N$$ is the notional, $$P$$ the price per unit of notional for the remaining term, and $$C$$ the eligible collateral. Prices come from APRs:
+where $$N$$ is the notional in [Debt Units](bootstrap-liquidity.md#debt-unit), $$P$$ the price per DU for the remaining term, and $$C$$ the eligible collateral. Prices come from APRs:
 
 $$
 P = \text{APR} \times \frac{\text{days remaining}}{365}

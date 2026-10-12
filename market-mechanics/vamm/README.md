@@ -32,7 +32,12 @@ Time to maturity in years = Remaining duration in days / 365
 Implied APR = Spot price / Time to maturity in years
 ```
 
-**Spot price** is the fixed payment per unit of notional for the remaining term. **Implied APR** annualizes that payment using a **365-day year**. Partial days count proportionally.
+**Spot price** is the fixed payment per [Debt Unit](../bootstrap-liquidity.md#debt-unit) for the remaining term: the interest one DU earns in the lending market between now and maturity, compounding included. **Implied APR** expresses that payment as a simple yearly rate on the DU's value at market open, using a **365-day year**. Partial days count proportionally.
+
+Two consequences of that definition:
+
+- The floating interest a position receives compounds, while the quoted rate does not compound out to a full year. Against the APR a lending app shows, the difference on a one-month market at current rates is under 0.01 percentage points.
+- Because the rate is measured on the DU's value at market open and that value grows as interest accrues, later in a market the quoted rate reads slightly above the real cost. On a one-month market at current rates the gap is under 0.02 percentage points.
 
 **Example:** With 90 days remaining and a spot price of 0.0125:
 
