@@ -21,7 +21,7 @@ layout:
 
 # Managing Collateral
 
-Short positions require collateral in their isolated market account. Long positions cannot be liquidated: their fixed payments for the full term are known and locked at entry.
+Short positions require collateral in their isolated market account. Long positions cannot be liquidated (see [Rates Exchange Basics](../get-started/basics.md#fixed-and-floating)).
 
 ## What changes a short’s health?
 

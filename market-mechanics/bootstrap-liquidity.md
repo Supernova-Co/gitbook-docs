@@ -31,11 +31,7 @@ Price = baseReserve / quoteReserve
 
 Trades change the reserve ratio and marginal quote. Price impact depends on trade size and virtual curve depth.
 
-At an unchanged implied APR, the fixed payment for the remaining term decreases as expiry approaches:
-
-```text
-Price = Implied APR × Remaining duration in days / 365
-```
+At an unchanged implied APR, the fixed payment for the remaining term decreases as expiry approaches, because the price is the APR converted to a remaining-term price (see [Implied rate](vamm/README.md#implied-rate)).
 
 Between trades, `decayFixed` adjusts the reserves while preserving the constant product and implied APR. At expiry, the remaining-term value reaches zero. This time decay changes the fixed-payment value without changing the annualized rate.
 

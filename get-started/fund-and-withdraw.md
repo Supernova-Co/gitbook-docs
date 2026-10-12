@@ -32,7 +32,7 @@ Open [Rates Exchange](https://beta.rates.exchange) and select **Connect Wallet**
 {% step %}
 ### Deposit USDC or USDT
 
-Deposit the token for your market into your Rates Exchange funding account: **USDC for USDC markets, or USDT for USDT markets**. Confirm the amount, transfer network, and destination before authorizing the deposit.
+Deposit the token that matches your market into your Rates Exchange funding account. Confirm the amount, transfer network, and destination before authorizing the deposit.
 {% endstep %}
 
 {% step %}
@@ -70,7 +70,7 @@ Removing collateral from an open short must leave the position within its requir
 
 Choose USDC or USDT and an amount within your available funding balance. Confirm the destination and transfer network, then authorize the withdrawal.
 
-Withdrawal gas is paid from the gas balance for that token, typically about **$0.01 per action**. An automatic gas top-up may use funds from your funding account or wallet.
+Gas applies to withdrawals as well. See [Gas fee](../rates-trading/fee.md#gas-balances).
 {% endstep %}
 
 {% step %}
@@ -79,12 +79,6 @@ Withdrawal gas is paid from the gas balance for that token, typically about **$0
 Once the transfer completes, confirm the USDC or USDT has arrived at the destination on the selected network. A decrease in your Rates Exchange balance alone does not confirm receipt.
 {% endstep %}
 {% endstepper %}
-
-## Managing an underlying loan or deposit
-
-Use the underlying lending protocol's process to repay a loan or withdraw a lending deposit. Review your Rates Exchange hedge whenever that underlying exposure changes.
-
-Closing a hedge and withdrawing funds are separate actions. Closing a Rates Exchange position does not itself repay your Aave loan or withdraw your lending deposit.
 
 ## Need help?
 

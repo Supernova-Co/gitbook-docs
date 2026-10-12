@@ -35,9 +35,7 @@ Realized PnL does not necessarily mean withdrawable funds. Collateral requiremen
 
 ## Liquidation valuation
 
-Normal-mode short liquidation checks use the **15-minute TWAP mark rate**, converted to a price for the remaining term. Matched recovery uses a 3-day moving average of the underlying floating rate. The risk mark determines eligibility; normal-mode liquidation execution uses available order-book and vAMM prices.
-
-See [Implied Rate & Mark Rate](../market-mechanics/vamm/README.md) for the formulas.
+Short liquidation checks use the market's risk mark, not the execution price. See [Implied Rate & Mark Rate](../market-mechanics/vamm/README.md#which-rate-is-used) for which rate applies.
 
 <a id="close-position"></a>
 

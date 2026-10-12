@@ -58,11 +58,7 @@ Mark APR = Sum(Implied APR × Duration) / Total duration
 Mark APR = (4% × 10 + 5.5% × 5) / 15 = 4.5%
 ```
 
-The mark rate is converted into a remaining-term price for risk calculations:
-
-```text
-Mark price = Mark APR × Remaining duration in days / 365
-```
+For risk calculations, the mark APR is converted into a remaining-term price the same way as the spot price above: the mark price is the mark APR multiplied by the time to maturity in years.
 
 Time weighting smooths short-lived changes in the live implied rate. Trades still execute at current venue prices.
 

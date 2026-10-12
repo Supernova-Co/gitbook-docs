@@ -48,11 +48,11 @@ Whether rates rise or fall, your borrowing cost stays at the 5% fixed rate, befo
 ## Manage your position
 
 - **Liquidation:** Your Rates Exchange long **cannot be liquidated**: its fixed payments for the full term are known and locked at entry, so it owes nothing further. Your Aave loan can still be liquidated, so continue monitoring its collateral and health.
-- **Repayment:** Repay the loan through Aave. Repayment does not close the hedge; review its size whenever your borrowing changes.
+- **Repayment:** Repay the loan through Aave.
 
 <a id="manage-or-exit-early-optional"></a>
 
-- **Early exit:** Close the long before expiry at available market terms. Fees and the exit price affect your result. Closing through the Hedge flow automatically bridges the remaining funds to your Ethereum mainnet wallet; it does not repay your Aave loan.
+- **Early exit:** Close the long before expiry at available market terms. Fees and the exit price affect your result. Closing through the Hedge flow automatically bridges the remaining funds to your Ethereum mainnet wallet.
 
 <a id="settlement-at-expiry"></a>
 <a id="auto-rolling-optional"></a>

@@ -38,11 +38,7 @@ If closing an underwater short cannot recover the amount owed, `accrueBadDebt` r
 
 The market enters one-way matched recovery mode if the vault can no longer fund the net floating payments owed to longs, or if negative vault PnL exhausts its backing. Before maturity, entry into recovery trims the unmatched long exposure pro rata, leaving a 1:1 matched book in which shorts' floating payments fund longs directly. The vAMM is disabled and vault deposits are restricted.
 
-**Risk valuation:** Liquidation eligibility in matched recovery uses a **3-day moving average of the underlying floating rate** instead of the normal vAMM TWAP, converted into a price for the remaining term:
-
-```text
-Matched-mode mark price = 3-day moving average of floating APR × Remaining duration in days / 365
-```
+**Risk valuation:** Liquidation eligibility in matched recovery uses a **3-day moving average of the underlying floating rate** instead of the normal vAMM TWAP, converted into a remaining-term price in the same way as the [mark price](../vamm/README.md#mark-rate).
 
 The recovery latch is evaluated during transactions calling `Vault.settleFunding`.
 
